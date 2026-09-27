@@ -1,0 +1,151 @@
+{
+  "$comment": "LocalServe MongoDB Collections & Validation Schema",
+  "database": "local_serve",
+  "collections": {
+    "users": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": ["name", "email", "password", "role"],
+          "properties": {
+            "name": { "bsonType": "string", "description": "Full name of the user" },
+            "email": { "bsonType": "string", "pattern": "^\\S+@\\S+\\.\\S+$", "description": "Unique email address" },
+            "password": { "bsonType": "string", "description": "bcrypt hashed password string" },
+            "role": { "enum": ["customer", "provider", "serviceProvider", "admin"], "description": "User role permissions" },
+            "phone": { "bsonType": "string" },
+            "profileImage": { "bsonType": "string" },
+            "address": { "bsonType": "string" },
+            "city": { "bsonType": "string" },
+            "location": {
+              "bsonType": "object",
+              "properties": {
+                "type": { "enum": ["Point"] },
+                "coordinates": { "bsonType": "array", "items": { "bsonType": "double" } }
+              }
+            }
+          }
+        }
+      },
+      "indexes": [
+        { "key": { "email": 1 }, "unique": true }
+      ]
+    },
+    "service_providers": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": ["user", "businessName"],
+          "properties": {
+            "user": { "bsonType": "objectId" },
+            "businessName": { "bsonType": "string" },
+            "tagline": { "bsonType": "string" },
+            "bio": { "bsonType": "string" },
+            "experienceYears": { "bsonType": "int" },
+            "hourlyRate": { "bsonType": "double" },
+            "serviceCategories": { "bsonType": "array", "items": { "bsonType": "string" } },
+            "city": { "bsonType": "string" },
+            "area": { "bsonType": "string" },
+            "location": {
+              "bsonType": "object",
+              "properties": {
+                "type": { "enum": ["Point"] },
+                "coordinates": { "bsonType": "array", "items": { "bsonType": "double" } }
+              }
+            },
+            "verificationStatus": { "enum": ["verified", "pending", "rejected"] },
+            "rating": { "bsonType": "double" },
+            "totalReviews": { "bsonType": "int" },
+            "isAvailable": { "bsonType": "bool" },
+            "isEmergency": { "bsonType": "bool" }
+          }
+        }
+      },
+      "indexes": [
+        { "key": { "location": "2dsphere" } },
+        { "key": { "city": 1, "serviceCategories": 1 } },
+        { "key": { "user": 1 }, "unique": true }
+      ]
+    },
+    "services": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": ["provider", "serviceName", "category", "averagePrice"],
+          "properties": {
+            "provider": { "bsonType": "objectId" },
+            "serviceName": { "bsonType": "string" },
+            "category": { "bsonType": "string" },
+            "description": { "bsonType": "string" },
+            "averagePrice": { "bsonType": "double" },
+            "priceType": { "enum": ["fixed", "hourly", "quote"] },
+            "durationMins": { "bsonType": "int" },
+            "emergencyAvailable": { "bsonType": "bool" },
+            "isActive": { "bsonType": "bool" }
+          }
+        }
+      },
+      "indexes": [
+        { "key": { "provider": 1, "category": 1 } }
+      ]
+    },
+    "bookings": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": ["customerId", "providerId", "serviceTitle", "bookingDate", "bookingTime", "address", "total_price"],
+          "properties": {
+            "customerId": { "bsonType": "objectId" },
+            "providerId": { "bsonType": "objectId" },
+            "serviceId": { "bsonType": "objectId" },
+            "serviceTitle": { "bsonType": "string" },
+            "bookingDate": { "bsonType": "string" },
+            "bookingTime": { "bsonType": "string" },
+            "address": { "bsonType": "string" },
+            "total_price": { "bsonType": "double" },
+            "status": { "enum": ["pending", "accepted", "rejected", "confirmed", "in-progress", "completed", "cancelled"] },
+            "paymentStatus": { "enum": ["pending", "paid", "cash_on_delivery"] }
+          }
+        }
+      },
+      "indexes": [
+        { "key": { "providerId": 1, "bookingDate": 1, "bookingTime": 1, "status": 1 } },
+        { "key": { "customerId": 1 } }
+      ]
+    },
+    "reviews": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": ["customerId", "providerId", "bookingId", "rating", "comment"],
+          "properties": {
+            "customerId": { "bsonType": "objectId" },
+            "providerId": { "bsonType": "objectId" },
+            "bookingId": { "bsonType": "objectId" },
+            "rating": { "bsonType": "int", "minimum": 1, "maximum": 5 },
+            "comment": { "bsonType": "string" },
+            "providerResponse": { "bsonType": ["string", "null"] }
+          }
+        }
+      },
+      "indexes": [
+        { "key": { "bookingId": 1 }, "unique": true },
+        { "key": { "providerId": 1, "createdAt": -1 } }
+      ]
+    },
+    "favorites": {
+      "indexes": [
+        { "key": { "customerId": 1, "providerId": 1 }, "unique": true }
+      ]
+    },
+    "chats": {
+      "indexes": [
+        { "key": { "sender": 1, "receiver": 1, "createdAt": 1 } }
+      ]
+    },
+    "notifications": {
+      "indexes": [
+        { "key": { "userId": 1, "createdAt": -1 } }
+      ]
+    }
+  }
+}

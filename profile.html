@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provider Profile</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #eef5fb;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: #7fb3d5;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #08304a;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #08304a;
+}
+
+nav a:hover {
+    color: white;
+}
+
+.back-link {
+    padding: 20px 50px;
+}
+
+.back-link a {
+    text-decoration: none;
+    color: #0a3d62;
+    font-weight: bold;
+}
+
+.back-link a:hover {
+    color: #1e6f9f;
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: 10px auto 40px;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.profile-top {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #cfe8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+}
+
+.profile-info h2 {
+    color: #0a3d62;
+}
+
+.profile-info p {
+    margin-top: 5px;
+}
+
+.book-btn {
+    margin-left: auto;
+}
+
+.book-btn button {
+    padding: 12px 20px;
+    background: #0a3d62;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.book-btn button:hover {
+    background: #145374;
+}
+
+.section {
+    margin-top: 30px;
+}
+
+.section h3 {
+    margin-bottom: 10px;
+    color: #0a3d62;
+}
+
+.service-list span {
+    display: inline-block;
+    background: #e3f2fd;
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin: 5px;
+}
+
+.review {
+    background: #f4f8fb;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+@media(max-width: 768px) {
+    .profile-top {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .book-btn {
+        margin-top: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ServiceFinder</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="#">Bookings</a>
+        <a href="#">Login</a>
+    </nav>
+</header>
+
+<div class="back-link">
+    <a href="services.html">← Back to Services</a>
+</div>
+
+<div class="profile-container">
+
+    <div class="profile-top">
+        <div class="profile-img">⚡</div>
+
+        <div class="profile-info">
+            <h2 id="name">Name</h2>
+            <p id="rating"></p>
+            <p id="exp"></p>
+            <p id="loc"></p>
+        </div>
+
+        <div class="book-btn">
+            <button>Book Now</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>About</h3>
+        <p id="about"></p>
+    </div>
+
+    <div class="section">
+        <h3>Services Offered</h3>
+        <div class="service-list" id="services"></div>
+    </div>
+
+    <div class="section">
+        <h3>Customer Reviews</h3>
+
+        <div class="review">
+            ⭐⭐⭐⭐⭐ <br>
+            "Very quick service and professional work!"
+        </div>
+
+        <div class="review">
+            ⭐⭐⭐⭐ <br>
+            "Good electrician, solved my issue fast."
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const providers = {
+    1: {
+        name: "Ramesh Electrician",
+        rating: "⭐ 4.8 Rating",
+        experience: "5 Years Experience",
+        location: "📍 Jaipur",
+        about: "Experienced electrician skilled in wiring and repair.",
+        services: ["Wiring", "Fan Installation", "Repair"]
+    },
+
+    2: {
+        name: "Amit Electrician",
+        rating: "⭐ 4.6 Rating",
+        experience: "6 Years Experience",
+        location: "📍 Jaipur",
+        about: "Expert in installation and maintenance services.",
+        services: ["Installation", "Maintenance", "Switch Repair"]
+    },
+
+    3: {
+        name: "Suresh Electrician",
+        rating: "⭐ 4.9 Rating",
+        experience: "4 Years Experience",
+        location: "📍 Jaipur",
+        about: "Fast and reliable service with high ratings.",
+        services: ["Wiring", "Repair", "Emergency Service"]
+    }
+};
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const provider = providers[id];
+
+if (provider) {
+    document.getElementById("name").innerText = provider.name;
+    document.getElementById("rating").innerText = provider.rating;
+    document.getElementById("exp").innerText = provider.experience;
+    document.getElementById("loc").innerText = provider.location;
+    document.getElementById("about").innerText = provider.about;
+
+    let serviceHTML = "";
+    provider.services.forEach(service => {
+        serviceHTML += `<span>${service}</span>`;
+    });
+
+    document.getElementById("services").innerHTML = serviceHTML;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Service Finder</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: #7fb3d5;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #08304a;
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #08304a;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(to right, #a7c7e7, #cfe8ff);
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            color: #0a3d62;
+        }
+
+        .hero p {
+            margin: 10px 0 20px;
+            color: #333;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            padding: 10px;
+            width: 220px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            border: none;
+            background: #0a3d62;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #145374;
+        }
+
+        .categories {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .category-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-card {
+            background: white;
+            padding: 20px;
+            width: 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .category-card:hover {
+            background: #e3f2fd;
+            transform: translateY(-5px);
+        }
+
+        .services {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .service-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .service-card {
+            background: white;
+            padding: 20px;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #0a3d62;
+        }
+
+        .service-card button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            border: none;
+            background: #1e6f9f;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .service-card button:hover {
+            background: #145374;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">ServiceFinder</div>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="bookings.html">Bookings</a>
+            <a href="#">Login</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Find Trusted Services Near You</h1>
+        <p>Electrician, Plumber, Tutor & More</p>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search service">
+            <input type="text" placeholder="Location">
+            <button>Search</button>
+        </div>
+    </section>
+
+    <section class="categories">
+        <h2>Service Categories</h2>
+        <div class="category-container">
+            <div class="category-card">🔧 Home Repair</div>
+            <div class="category-card">📚 Education</div>
+            <div class="category-card">🧹 Cleaning</div>
+            <div class="category-card">💊 Health</div>
+            <div class="category-card">💻 Electronics</div>
+        </div>
+    </section>
+
+    <section class="services">
+        <h2>Top Rated Services</h2>
+        <div class="service-container">
+
+            <div class="service-card">
+                <h3>Ramesh Electrician</h3>
+                <p>⭐ 4.8 | 5 Years Experience</p>
+                <button>View Profile</button>
+            </div>
+
+            <div class="service-card">
+                <h3>Priya Tutor</h3>
+                <p>⭐ 4.9 | 3 Years Experience</p>
+                <button>View Profile</button>
+            </div>
+
+            <div class="service-card">
+                <h3>Amit Plumber</h3>
+                <p>⭐ 4.7 | 6 Years Experience</p>
+                <button>View Profile</button>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #ddeaf6;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: #7fb3d5;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #08304a;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #08304a;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: white;
+}
+
+.main {
+    display: flex;
+}
+
+.sidebar {
+    width: 260px;
+    background: #0a3d62;
+    color: white;
+    height: 100vh;
+    padding: 25px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar label {
+    display: block;
+    margin-top: 15px;
+}
+
+.sidebar select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.search-bar {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.search-bar input {
+    padding: 10px;
+    flex: 1;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background: #0a3d62;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background: #145374;
+}
+
+.service-card {
+    background: white;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.service-left {
+    width: 8px;
+    background: #1e6f9f;
+}
+
+.service-body {
+    padding: 20px;
+    flex: 1;
+}
+
+.service-body h3 {
+    color: #0a3d62;
+}
+
+.service-body p {
+    margin: 5px 0;
+}
+
+.service-right {
+    padding: 20px;
+    text-align: right;
+}
+
+.price {
+    font-weight: bold;
+    color: #1e6f9f;
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #0a3d62;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #145374;
+}
+
+@media(max-width: 768px) {
+    .main {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        height: auto;
+        width: 100%;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ServiceFinder</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Bookings</a>
+        <a href="#">Login</a>
+    </nav>
+</header>
+
+<div class="main">
+
+    <div class="sidebar">
+        <h2>Filters</h2>
+
+        <label>Rating</label>
+        <select>
+            <option>All</option>
+            <option>4★ & above</option>
+        </select>
+
+        <label>Price</label>
+        <select>
+            <option>All</option>
+            <option>₹0–500</option>
+            <option>₹500–1000</option>
+        </select>
+
+        <label>Availability</label>
+        <select>
+            <option>Any</option>
+            <option>Today</option>
+        </select>
+    </div>
+
+    <div class="content">
+
+        <div class="search-bar">
+            <input type="text" placeholder="Electrician">
+            <input type="text" placeholder="Jaipur">
+            <button>Search</button>
+        </div>
+
+        <div class="service-card">
+            <div class="service-left"></div>
+
+            <div class="service-body">
+                <h3>Ramesh Electrician</h3>
+                <p>⭐ 4.8 | 5 Years Experience</p>
+                <p>📍 Jaipur</p>
+            </div>
+
+            <div class="service-right">
+                <div class="price">₹500</div>
+                <a href="profile.html?id=1" class="btn">View Profile</a>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <div class="service-left"></div>
+
+            <div class="service-body">
+                <h3>Amit Electrician</h3>
+                <p>⭐ 4.6 | 6 Years Experience</p>
+                <p>📍 Jaipur</p>
+            </div>
+
+            <div class="service-right">
+                <div class="price">₹700</div>
+                <a href="profile.html?id=2" class="btn">View Profile</a>
+            </div>
+        </div>
+
+                <div class="service-card">
+            <div class="service-left"></div>
+
+            <div class="service-body">
+                <h3>Suresh Electrician</h3>
+                <p>⭐ 4.8 | 5 Years Experience</p>
+                <p>📍 Jaipur</p>
+            </div>
+
+            <div class="service-right">
+                <div class="price">₹500</div>
+                <a href="profile.html?id=3" class="btn">View Profile</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

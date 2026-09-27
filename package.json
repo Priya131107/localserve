@@ -1,0 +1,39 @@
+{
+  "name": "localserve",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "LocalServe — Modern MERN Stack Local Service Discovery & Booking Platform",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "node server/server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed": "node server/seed/seedData.js",
+    "db:init": "node database/initDb.js",
+    "test:suite": "node test_full_suite.js",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client"
+  },
+  "keywords": [
+    "localserve",
+    "mern",
+    "local-services",
+    "service-finder",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "socketio"
+  ],
+  "author": "LocalServe Team",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "mongoose": "^8.4.1",
+    "socket.io": "^4.7.5"
+  }
+}

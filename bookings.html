@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Service</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #eef5fb;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: #7fb3d5;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #08304a;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #08304a;
+}
+
+/* CONTAINER */
+.booking-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.booking-container h2 {
+    color: #0a3d62;
+}
+
+/* PROVIDER BOX */
+.provider {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+/* FORM */
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* BUTTON */
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #0a3d62;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #145374;
+}
+
+/* CONFIRM BOX */
+.confirm-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #d4edda;
+    border-radius: 10px;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ServiceFinder</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="#">Bookings</a>
+    </nav>
+</header>
+
+<div class="booking-container">
+
+    <h2>Book Your Service</h2>
+
+    <!-- PROVIDER -->
+    <div class="provider">
+        <strong id="providerName">Provider Name</strong>
+    </div>
+
+    <!-- DATE -->
+    <label>Select Date</label>
+    <input type="date" id="date">
+
+    <!-- TIME -->
+    <label>Select Time Slot</label>
+    <select id="time">
+        <option>Morning (9 AM - 12 PM)</option>
+        <option>Afternoon (12 PM - 3 PM)</option>
+        <option>Evening (3 PM - 6 PM)</option>
+    </select>
+
+    <!-- BUTTON -->
+    <button onclick="confirmBooking()">Confirm Booking</button>
+
+    <!-- CONFIRMATION -->
+    <div class="confirm-box" id="confirmBox"></div>
+
+</div>
+
+<script>
+
+// PROVIDERS DATA
+const providers = {
+    1: "Ramesh Electrician",
+    2: "Amit Electrician",
+    3: "Suresh Electrician"
+};
+
+// GET ID
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// SET NAME
+if (providers[id]) {
+    document.getElementById("providerName").innerText = providers[id];
+}
+
+// CONFIRM FUNCTION
+function confirmBooking() {
+
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const name = providers[id];
+
+    if (!date) {
+        alert("Please select a date");
+        return;
+    }
+
+    const box = document.getElementById("confirmBox");
+
+    box.style.display = "block";
+    box.innerHTML = `
+        ✅ Booking Confirmed! <br><br>
+        👨‍🔧 Provider: <b>${name}</b><br>
+        📅 Date: <b>${date}</b><br>
+        ⏰ Time: <b>${time}</b>
+    `;
+}
+
+</script>
+
+</body>
+</html>
