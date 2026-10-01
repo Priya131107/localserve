@@ -33,13 +33,13 @@ const DEMO_ACCOUNTS = [
     bg: '#e0f2fe'
   },
   {
-    label: 'Home Tutor',
-    sublabel: 'Priya Verma',
-    email: 'priya.tutor@example.com',
+    label: 'Platform Admin',
+    sublabel: 'System Admin',
+    email: 'admin@example.com',
     password: 'password123',
-    icon: '📚',
-    color: '#059669',
-    bg: '#ecfdf5'
+    icon: '👑',
+    color: '#dc2626',
+    bg: '#fef2f2'
   }
 ];
 
@@ -52,6 +52,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [serverWaking, setServerWaking] = useState(false);
 
   const handleLogin = async (e, demoEmail, demoPassword) => {
     if (e) e.preventDefault();
@@ -64,13 +65,26 @@ export default function Login() {
     }
 
     setLoading(true);
+    setServerWaking(false);
+    // Show server wake-up notice after 4 seconds (Render free tier cold start)
+    const wakeTimer = setTimeout(() => setServerWaking(true), 4000);
     try {
       const res = await login(loginEmail, loginPass);
+      clearTimeout(wakeTimer);
+      setServerWaking(false);
       if (res.success) {
         showToast(`Welcome back, ${res.user.name}!`, 'success');
-        navigate(res.user.role === 'provider' ? '/provider/dashboard' : '/customer/dashboard');
+        if (res.user.role === 'admin') {
+          navigate('/admin/dashboard');
+        } else if (res.user.role === 'provider') {
+          navigate('/provider/dashboard');
+        } else {
+          navigate('/customer/dashboard');
+        }
       }
     } catch (error) {
+      clearTimeout(wakeTimer);
+      setServerWaking(false);
       showToast(error.message || 'Login failed. Please check your credentials.', 'error');
     } finally {
       setLoading(false);
@@ -266,6 +280,25 @@ export default function Login() {
                 </>
               )}
             </button>
+
+            {/* Server wake-up notice for Render free tier */}
+            {serverWaking && (
+              <div style={{
+                marginTop: '0.85rem',
+                padding: '0.75rem 1rem',
+                background: '#fef3c7',
+                border: '1px solid #fbbf24',
+                borderRadius: 'var(--radius-md)',
+                fontSize: '0.83rem',
+                color: '#92400e',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '0.5rem'
+              }}>
+                <span>⏳</span>
+                <span><strong>Server is waking up</strong> — The free-tier backend may take up to 30 seconds to start. Please wait, your login will complete automatically.</span>
+              </div>
+            )}
           </form>
 
           {/* Register Link */}

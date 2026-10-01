@@ -4,8 +4,16 @@ let socket = null;
 
 export function getSocket() {
   if (!socket) {
-    // In dev, connect to current host origin or default port 5000
-    const SOCKET_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : window.location.origin;
+    // Determine socket server URL
+    const envApi = import.meta.env.VITE_API_URL;
+    let SOCKET_URL;
+    if (envApi) {
+      SOCKET_URL = envApi.replace(/\/api\/?$/, '');
+    } else if (window.location.hostname === 'localhost') {
+      SOCKET_URL = 'http://localhost:5000';
+    } else {
+      SOCKET_URL = window.location.origin;
+    }
     socket = io(SOCKET_URL, {
       autoConnect: true,
       reconnection: true,

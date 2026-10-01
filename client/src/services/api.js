@@ -1,9 +1,10 @@
-const BASE_URL = '/api';
+const envApi = import.meta.env.VITE_API_URL || '';
+const BASE_URL = envApi ? (envApi.endsWith('/api') ? envApi : `${envApi.replace(/\/+$/, '')}/api`) : '/api';
 
 /**
- * Universal API Request Wrapper
+ * Universal API Request Wrapper with retry support for Render cold-start
  */
-async function request(endpoint, options = {}) {
+async function request(endpoint, options = {}, retries = 2) {
   const token = localStorage.getItem('lsf_token');
 
   const headers = {
@@ -17,18 +18,59 @@ async function request(endpoint, options = {}) {
     headers
   };
 
-  try {
-    const response = await fetch(`${BASE_URL}${endpoint}`, config);
-    const data = await response.json();
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const controller = new AbortController();
+      // Give extra time on first attempt in case backend is waking up (Render free tier)
+      const timeoutId = setTimeout(() => controller.abort(), attempt === 0 ? 30000 : 15000);
 
-    if (!response.ok) {
-      throw new Error(data.message || `Request failed with status ${response.status}`);
+      const response = await fetch(`${BASE_URL}${endpoint}`, {
+        ...config,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      const contentType = response.headers.get('content-type') || '';
+      
+      let data;
+      if (contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        let parsed = null;
+        try {
+          parsed = JSON.parse(text);
+        } catch {
+          // Response is HTML or plain text (e.g. 404, 502, proxy error)
+          if (attempt < retries) {
+            await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+            continue;
+          }
+          throw new Error(
+            `Server is starting up, please wait a moment and try again. (${response.status})`
+          );
+        }
+        data = parsed;
+      }
+
+      if (!response.ok) {
+        throw new Error(data?.message || `Request failed with status ${response.status}`);
+      }
+
+      return data;
+    } catch (error) {
+      const isNetworkError = error.name === 'AbortError' || error.name === 'TypeError' || error.message.includes('fetch');
+      if (isNetworkError && attempt < retries) {
+        console.warn(`API retry ${attempt + 1}/${retries} on ${endpoint}:`, error.message);
+        await new Promise(r => setTimeout(r, 3000 * (attempt + 1)));
+        continue;
+      }
+      console.error(`API Error on ${endpoint}:`, error.message);
+      if (error.name === 'AbortError') {
+        throw new Error('Request timed out. The server may be starting up — please try again in a few seconds.');
+      }
+      throw error;
     }
-
-    return data;
-  } catch (error) {
-    console.error(`API Error on ${endpoint}:`, error.message);
-    throw error;
   }
 }
 

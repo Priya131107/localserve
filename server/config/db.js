@@ -16,11 +16,25 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
+import User from '../models/User.js';
+import ServiceProvider from '../models/ServiceProvider.js';
+import Service from '../models/Service.js';
+import Booking from '../models/Booking.js';
+import Review from '../models/Review.js';
+import Category from '../models/Category.js';
+import Favorite from '../models/Favorite.js';
+import Chat from '../models/Chat.js';
+import Notification from '../models/Notification.js';
+
+export function getJwtSecret() {
+  return process.env.JWT_SECRET || 'localserve_jwt_production_secret_key_2026_ultra_secure';
+}
+
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/local_serve';
 
 let isMongoConnected = false;
 
-// In-memory fallback dataset for zero-config evaluation if MongoDB daemon is offline
+// In-memory dataset synced with MongoDB
 export const memoryDb = {
   users: [],
   categories: [],
@@ -38,16 +52,16 @@ export async function initMemoryDb() {
   const hashedPassword = await bcrypt.hash('password123', 10);
 
   memoryDb.categories = [
-    { id: 1, _id: 'cat_1', name: 'Electrical', slug: 'electrical', description: 'Expert electricians for wiring, short circuits, switchboards, and fan repairs.', icon: 'Zap', is_emergency: 1 },
-    { id: 2, _id: 'cat_2', name: 'Plumbing', slug: 'plumbing', description: 'Skilled plumbers for pipe leaks, bathroom fittings, motor installation, and drainage.', icon: 'Droplets', is_emergency: 1 },
-    { id: 3, _id: 'cat_3', name: 'Cleaning & Maid', slug: 'cleaning', description: 'Deep house cleaning, kitchen scrubbing, bathroom sanitation, and sofa cleaning.', icon: 'Sparkles', is_emergency: 0 },
-    { id: 4, _id: 'cat_4', name: 'Automotive & Mechanic', slug: 'automotive', description: 'Car and bike roadside assistance, engine repairs, tyre puncture, and servicing.', icon: 'Car', is_emergency: 1 },
-    { id: 5, _id: 'cat_5', name: 'AC & Appliance Repair', slug: 'appliance-repair', description: 'Fast repairs for Air Conditioners, Refrigerators, Washing Machines, and Microwaves.', icon: 'Flame', is_emergency: 1 },
-    { id: 6, _id: 'cat_6', name: 'Carpentry & Woodwork', slug: 'carpentry', description: 'Custom furniture repair, door locks, modular cabinets, and wooden polishing.', icon: 'Hammer', is_emergency: 0 },
-    { id: 7, _id: 'cat_7', name: 'Beauty & Salon', slug: 'beauty-salon', description: 'Professional home salon, haircuts, bridal makeup, facial, and grooming services.', icon: 'Scissors', is_emergency: 0 },
-    { id: 8, _id: 'cat_8', name: 'Home Tutor & Education', slug: 'education', description: 'Experienced home tutors for CBSE/ICSE, mathematics, science, music, and languages.', icon: 'GraduationCap', is_emergency: 0 },
-    { id: 9, _id: 'cat_9', name: 'Computer & Electronics', slug: 'computer-repair', description: 'Laptop/PC repairs, OS installation, WiFi setup, printer repair, and data recovery.', icon: 'Laptop', is_emergency: 0 },
-    { id: 10, _id: 'cat_10', name: 'Painting & Renovation', slug: 'painting', description: 'Interior and exterior wall painting, waterproof coating, and wallpaper installation.', icon: 'Paintbrush', is_emergency: 0 }
+    { id: 1, _id: 'cat_1', name: 'Electrical', slug: 'electrical', description: 'Expert electricians for wiring, short circuits, switchboards, and fan repairs.', icon: 'Zap', is_emergency: 1, emergencyAvailable: true },
+    { id: 2, _id: 'cat_2', name: 'Plumbing', slug: 'plumbing', description: 'Skilled plumbers for pipe leaks, bathroom fittings, motor installation, and drainage.', icon: 'Droplets', is_emergency: 1, emergencyAvailable: true },
+    { id: 3, _id: 'cat_3', name: 'Cleaning & Maid', slug: 'cleaning', description: 'Deep house cleaning, kitchen scrubbing, bathroom sanitation, and sofa cleaning.', icon: 'Sparkles', is_emergency: 0, emergencyAvailable: false },
+    { id: 4, _id: 'cat_4', name: 'Automotive & Mechanic', slug: 'automotive', description: 'Car and bike roadside assistance, engine repairs, tyre puncture, and servicing.', icon: 'Car', is_emergency: 1, emergencyAvailable: true },
+    { id: 5, _id: 'cat_5', name: 'AC & Appliance Repair', slug: 'appliance-repair', description: 'Fast repairs for Air Conditioners, Refrigerators, Washing Machines, and Microwaves.', icon: 'Flame', is_emergency: 1, emergencyAvailable: true },
+    { id: 6, _id: 'cat_6', name: 'Carpentry & Woodwork', slug: 'carpentry', description: 'Custom furniture repair, door locks, modular cabinets, and wooden polishing.', icon: 'Hammer', is_emergency: 0, emergencyAvailable: false },
+    { id: 7, _id: 'cat_7', name: 'Beauty & Salon', slug: 'beauty-salon', description: 'Professional home salon, haircuts, bridal makeup, facial, and grooming services.', icon: 'Scissors', is_emergency: 0, emergencyAvailable: false },
+    { id: 8, _id: 'cat_8', name: 'Home Tutor & Education', slug: 'education', description: 'Experienced home tutors for CBSE/ICSE, mathematics, science, music, and languages.', icon: 'GraduationCap', is_emergency: 0, emergencyAvailable: false },
+    { id: 9, _id: 'cat_9', name: 'Computer & Electronics', slug: 'computer-repair', description: 'Laptop/PC repairs, OS installation, WiFi setup, printer repair, and data recovery.', icon: 'Laptop', is_emergency: 0, emergencyAvailable: false },
+    { id: 10, _id: 'cat_10', name: 'Painting & Renovation', slug: 'painting', description: 'Interior and exterior wall painting, waterproof coating, and wallpaper installation.', icon: 'Paintbrush', is_emergency: 0, emergencyAvailable: false }
   ];
 
   memoryDb.users = [
@@ -142,23 +156,189 @@ export async function initMemoryDb() {
 
 initMemoryDb();
 
-// Attempt MongoDB / Mongoose connection with timeout
+/**
+ * Sync MongoDB Collections to Memory & ensure initial seed exists
+ */
+async function syncWithMongo() {
+  if (!isMongoConnected) return;
+
+  try {
+    const userCount = await User.countDocuments();
+    if (userCount === 0) {
+      console.log('🌱 Initializing MongoDB Atlas with platform data...');
+      // 1. Seed Categories
+      for (const cat of memoryDb.categories) {
+        await Category.findOneAndUpdate(
+          { slug: cat.slug },
+          { ...cat },
+          { upsert: true, new: true }
+        ).catch(() => {});
+      }
+
+      // 2. Seed Users
+      const userMap = new Map();
+      for (const u of memoryDb.users) {
+        const created = await User.create({
+          name: u.name,
+          email: u.email,
+          password: u.password,
+          role: u.role,
+          phone: u.phone,
+          address: u.address,
+          city: u.city,
+          profileImage: u.avatar || u.profileImage
+        }).catch(err => null);
+
+        if (created) {
+          userMap.set(u.id, created);
+          u.mongoId = created._id;
+        }
+      }
+
+      // 3. Seed Providers
+      const provMap = new Map();
+      for (const p of memoryDb.service_providers) {
+        const u = userMap.get(p.user_id) || memoryDb.users.find(user => user.id === p.user_id);
+        const mongoUserId = u?.mongoId || u?._id;
+        const createdP = await ServiceProvider.create({
+          user: mongoUserId,
+          businessName: p.business_name,
+          name: u?.name || p.business_name,
+          tagline: p.tagline,
+          bio: p.bio,
+          experienceYears: p.experience_years,
+          hourlyRate: p.hourly_rate,
+          pricing: { hourlyRate: p.hourly_rate, startingPrice: 299 },
+          city: p.city,
+          area: p.area,
+          categoryId: p.category_id,
+          isAvailable: !!p.is_available,
+          isEmergency: !!p.is_emergency,
+          rating: p.rating || 5.0,
+          totalReviews: p.total_reviews || 0,
+          verificationStatus: 'verified',
+          verified: true
+        }).catch(err => null);
+
+        if (createdP) {
+          provMap.set(p.id, createdP);
+          p.mongoId = createdP._id;
+        }
+      }
+
+      // 4. Seed Services
+      for (const s of memoryDb.services) {
+        const p = provMap.get(s.provider_id) || memoryDb.service_providers.find(prov => prov.id === s.provider_id);
+        const mongoProvId = p?.mongoId || p?._id;
+        if (mongoProvId) {
+          await Service.create({
+            provider: mongoProvId,
+            serviceName: s.serviceName || s.title,
+            title: s.title || s.serviceName,
+            category: 'General',
+            categoryId: s.category_id,
+            description: s.description,
+            price: s.price,
+            averagePrice: s.price,
+            durationMins: s.duration_mins || 60,
+            priceType: s.price_type || 'fixed',
+            isActive: true
+          }).catch(err => null);
+        }
+      }
+
+      console.log('✅ Initial MongoDB Atlas documents populated successfully.');
+    } else {
+      // Load saved users from MongoDB into memory store
+      const mongoUsers = await User.find({}).select('+password');
+      for (const mu of mongoUsers) {
+        const exists = memoryDb.users.find(u => u.email.toLowerCase() === mu.email.toLowerCase());
+        if (exists) {
+          exists.mongoId = mu._id;
+          exists.name = mu.name;
+          exists.role = mu.role;
+          exists.phone = mu.phone;
+          exists.address = mu.address;
+          exists.city = mu.city;
+          exists.avatar = mu.profileImage || exists.avatar;
+          exists.password = mu.password;
+        } else {
+          const newId = memoryDb.users.length ? Math.max(...memoryDb.users.map(u => u.id || 0)) + 1 : 1;
+          memoryDb.users.push({
+            id: newId,
+            _id: `user_${newId}`,
+            mongoId: mu._id,
+            name: mu.name,
+            email: mu.email,
+            password: mu.password,
+            role: mu.role,
+            phone: mu.phone,
+            address: mu.address,
+            city: mu.city,
+            avatar: mu.profileImage || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(mu.name)}`,
+            profileImage: mu.profileImage,
+            created_at: mu.createdAt || new Date()
+          });
+        }
+      }
+
+      // Load saved providers
+      const mongoProviders = await ServiceProvider.find({});
+      for (const mp of mongoProviders) {
+        const matchingUser = memoryDb.users.find(u => String(u.mongoId) === String(mp.user) || u.email === mp.email);
+        const userId = matchingUser ? matchingUser.id : 4;
+        const exists = memoryDb.service_providers.find(p => p.user_id === userId || String(p.mongoId) === String(mp._id));
+        if (!exists) {
+          const newId = memoryDb.service_providers.length ? Math.max(...memoryDb.service_providers.map(p => p.id || 0)) + 1 : 1;
+          memoryDb.service_providers.push({
+            id: newId,
+            _id: `sp_${newId}`,
+            mongoId: mp._id,
+            user_id: userId,
+            category_id: mp.categoryId || 1,
+            business_name: mp.businessName,
+            tagline: mp.tagline || '',
+            bio: mp.bio || '',
+            experience_years: mp.experienceYears || 1,
+            hourly_rate: mp.hourlyRate || 350,
+            city: mp.city || 'Jaipur',
+            area: mp.area || 'Malviya Nagar',
+            latitude: mp.location?.coordinates?.[1] || 26.8529,
+            longitude: mp.location?.coordinates?.[0] || 75.8052,
+            is_available: mp.isAvailable ? 1 : 0,
+            is_emergency: mp.isEmergency ? 1 : 0,
+            working_hours: mp.availability?.workingHours || '9:00 AM - 8:00 PM',
+            rating: mp.rating || 5.0,
+            total_reviews: mp.totalReviews || 0,
+            verified: mp.verified ? 1 : 0,
+            verificationStatus: mp.verificationStatus || 'verified',
+            created_at: mp.createdAt || new Date()
+          });
+        }
+      }
+      console.log(`📦 Synced ${mongoUsers.length} users and ${mongoProviders.length} providers from MongoDB Atlas into memory.`);
+    }
+  } catch (err) {
+    console.warn('⚠️ Notice during MongoDB sync:', err.message);
+  }
+}
+
+// Attempt MongoDB / Mongoose connection
 export async function connectDB() {
   try {
     mongoose.set('strictQuery', false);
     await mongoose.connect(MONGO_URI, {
-      serverSelectionTimeoutMS: 2500
+      serverSelectionTimeoutMS: 5000
     });
     isMongoConnected = true;
     console.log(`\n======================================================`);
-    console.log(`✅ [MongoDB] Connected successfully to Mongoose: ${MONGO_URI}`);
+    console.log(`✅ [MongoDB Atlas] Connected successfully: ${MONGO_URI.split('@')[1] || MONGO_URI}`);
     console.log(`======================================================\n`);
+    await syncWithMongo();
     return mongoose.connection;
   } catch (error) {
     isMongoConnected = false;
-    console.log(`\nℹ️ [Database Engine] MongoDB daemon at "${MONGO_URI}" was not directly reachable.`);
-    console.log(`   Running seamlessly on integrated dual-engine fallback store.`);
-    console.log(`   To connect MongoDB Atlas or Local mongod, set MONGO_URI in your .env file.\n`);
+    console.log(`\nℹ️ [Database Engine] MongoDB connection fallback active (${error.message}).`);
     return null;
   }
 }
@@ -170,13 +350,13 @@ export function getIsMongoConnected() {
 }
 
 /**
- * Universal query router supporting both native MongoDB and integrated fallback store
+ * Universal query router supporting both native MongoDB and integrated store
  */
 export async function query(sql, params = []) {
   return handleMemoryQuery(sql, params);
 }
 
-// Memory query handler for controllers
+// Memory & MongoDB query handler
 export function handleMemoryQuery(sql, params = []) {
   const normalized = sql.trim().toLowerCase();
 
@@ -370,6 +550,26 @@ export function handleMemoryQuery(sql, params = []) {
         created_at: new Date()
       };
       memoryDb.users.push(newUser);
+
+      // Persist to MongoDB Atlas
+      if (mongoose.connection.readyState === 1) {
+        User.create({
+          name: newUser.name,
+          email: newUser.email,
+          password: newUser.password,
+          role: newUser.role,
+          phone: newUser.phone,
+          address: newUser.address,
+          city: newUser.city,
+          profileImage: newUser.avatar
+        }).then(doc => {
+          newUser.mongoId = doc._id;
+          console.log(`💾 [MongoDB] User persisted to database: ${newUser.email} (ID: ${doc._id})`);
+        }).catch(err => {
+          console.warn('⚠️ [MongoDB] User persistence notice:', err.message);
+        });
+      }
+
       return { insertId: newId, affectedRows: 1 };
     }
 
@@ -399,6 +599,37 @@ export function handleMemoryQuery(sql, params = []) {
         created_at: new Date()
       };
       memoryDb.service_providers.push(newProv);
+
+      // Persist to MongoDB Atlas
+      if (mongoose.connection.readyState === 1) {
+        const u = memoryDb.users.find(user => user.id === newProv.user_id);
+        const mongoUserId = u?.mongoId || new mongoose.Types.ObjectId();
+        ServiceProvider.create({
+          user: mongoUserId,
+          businessName: newProv.business_name,
+          name: u?.name || newProv.business_name,
+          tagline: newProv.tagline,
+          bio: newProv.bio,
+          experienceYears: newProv.experience_years,
+          hourlyRate: newProv.hourly_rate,
+          pricing: { hourlyRate: newProv.hourly_rate, startingPrice: 299 },
+          city: newProv.city,
+          area: newProv.area,
+          categoryId: newProv.category_id,
+          isAvailable: true,
+          isEmergency: !!newProv.is_emergency,
+          rating: 5.0,
+          totalReviews: 0,
+          verificationStatus: 'verified',
+          verified: true
+        }).then(doc => {
+          newProv.mongoId = doc._id;
+          console.log(`💾 [MongoDB] ServiceProvider persisted to database: ${newProv.business_name}`);
+        }).catch(err => {
+          console.warn('⚠️ [MongoDB] ServiceProvider persistence notice:', err.message);
+        });
+      }
+
       return { insertId: newId, affectedRows: 1 };
     }
 
@@ -421,6 +652,32 @@ export function handleMemoryQuery(sql, params = []) {
         created_at: new Date()
       };
       memoryDb.bookings.push(newBooking);
+
+      if (mongoose.connection.readyState === 1) {
+        const cust = memoryDb.users.find(u => u.id === newBooking.customer_id);
+        const prov = memoryDb.service_providers.find(p => p.id === newBooking.provider_id);
+        const custId = cust?.mongoId || new mongoose.Types.ObjectId();
+        const provId = prov?.mongoId || new mongoose.Types.ObjectId();
+
+        Booking.create({
+          customerId: custId,
+          providerId: provId,
+          serviceTitle: newBooking.service_title,
+          bookingDate: newBooking.booking_date,
+          bookingTime: newBooking.booking_time,
+          address: newBooking.customer_address,
+          customer_phone: newBooking.customer_phone,
+          notes: newBooking.notes,
+          estimatedCost: newBooking.total_price,
+          finalCost: newBooking.total_price,
+          total_price: newBooking.total_price,
+          status: 'pending'
+        }).then(doc => {
+          newBooking.mongoId = doc._id;
+          console.log(`💾 [MongoDB] Booking persisted to database: #${newId}`);
+        }).catch(err => {});
+      }
+
       return { insertId: newId, affectedRows: 1 };
     }
 
@@ -442,6 +699,27 @@ export function handleMemoryQuery(sql, params = []) {
         created_at: new Date()
       };
       memoryDb.services.push(newService);
+
+      if (mongoose.connection.readyState === 1) {
+        const prov = memoryDb.service_providers.find(p => p.id === newService.provider_id);
+        const provId = prov?.mongoId || new mongoose.Types.ObjectId();
+        Service.create({
+          provider: provId,
+          serviceName: newService.title,
+          title: newService.title,
+          category: 'General',
+          categoryId: newService.category_id,
+          description: newService.description,
+          price: newService.price,
+          averagePrice: newService.price,
+          durationMins: newService.duration_mins,
+          priceType: newService.price_type,
+          isActive: true
+        }).then(doc => {
+          newService.mongoId = doc._id;
+        }).catch(err => {});
+      }
+
       return { insertId: newId, affectedRows: 1 };
     }
 
@@ -468,6 +746,21 @@ export function handleMemoryQuery(sql, params = []) {
         prov.rating = Number(avg.toFixed(2));
         prov.total_reviews = provReviews.length;
       }
+
+      if (mongoose.connection.readyState === 1) {
+        const cust = memoryDb.users.find(u => u.id === newReview.customer_id);
+        const booking = memoryDb.bookings.find(b => b.id === newReview.booking_id);
+        Review.create({
+          customerId: cust?.mongoId || new mongoose.Types.ObjectId(),
+          providerId: prov?.mongoId || new mongoose.Types.ObjectId(),
+          bookingId: booking?.mongoId || new mongoose.Types.ObjectId(),
+          rating: newReview.rating,
+          comment: newReview.comment
+        }).then(doc => {
+          newReview.mongoId = doc._id;
+        }).catch(err => {});
+      }
+
       return { insertId: newId, affectedRows: 1 };
     }
 
@@ -475,7 +768,17 @@ export function handleMemoryQuery(sql, params = []) {
       const exists = memoryDb.favorites.find(f => f.customer_id == params[0] && f.provider_id == params[1]);
       if (!exists) {
         const newId = memoryDb.favorites.length ? Math.max(...memoryDb.favorites.map(f => f.id || 0)) + 1 : 1;
-        memoryDb.favorites.push({ id: newId, _id: `fav_${newId}`, customer_id: params[0], provider_id: params[1], created_at: new Date() });
+        const newFav = { id: newId, _id: `fav_${newId}`, customer_id: params[0], provider_id: params[1], created_at: new Date() };
+        memoryDb.favorites.push(newFav);
+
+        if (mongoose.connection.readyState === 1) {
+          const cust = memoryDb.users.find(u => u.id == params[0]);
+          const prov = memoryDb.service_providers.find(p => p.id == params[1]);
+          if (cust?.mongoId && prov?.mongoId) {
+            Favorite.create({ customerId: cust.mongoId, providerId: prov.mongoId }).catch(() => {});
+          }
+        }
+
         return { insertId: newId, affectedRows: 1 };
       }
       return { affectedRows: 0 };
@@ -494,6 +797,19 @@ export function handleMemoryQuery(sql, params = []) {
         created_at: new Date()
       };
       memoryDb.messages.push(newMsg);
+
+      if (mongoose.connection.readyState === 1) {
+        const sender = memoryDb.users.find(u => u.id == params[0]);
+        const receiver = memoryDb.users.find(u => u.id == params[1]);
+        if (sender?.mongoId && receiver?.mongoId) {
+          Chat.create({
+            sender: sender.mongoId,
+            receiver: receiver.mongoId,
+            message: newMsg.message
+          }).catch(() => {});
+        }
+      }
+
       return { insertId: newId, affectedRows: 1 };
     }
   }
@@ -507,6 +823,9 @@ export function handleMemoryQuery(sql, params = []) {
         const booking = memoryDb.bookings.find(b => b.id == id || b._id == id);
         if (booking) {
           booking.status = status;
+          if (mongoose.connection.readyState === 1 && booking.mongoId) {
+            Booking.findByIdAndUpdate(booking.mongoId, { status }).catch(() => {});
+          }
           return { affectedRows: 1 };
         }
       }
@@ -517,6 +836,9 @@ export function handleMemoryQuery(sql, params = []) {
         const prov = memoryDb.service_providers.find(p => p.id == params[1] || p._id == params[1] || p.user_id == params[1]);
         if (prov) {
           prov.is_available = params[0] ? 1 : 0;
+          if (mongoose.connection.readyState === 1 && prov.mongoId) {
+            ServiceProvider.findByIdAndUpdate(prov.mongoId, { isAvailable: !!params[0] }).catch(() => {});
+          }
           return { affectedRows: 1 };
         }
       }
@@ -529,6 +851,9 @@ export function handleMemoryQuery(sql, params = []) {
         const rev = memoryDb.reviews.find(r => r.id == id || r._id == id);
         if (rev) {
           rev.provider_response = response;
+          if (mongoose.connection.readyState === 1 && rev.mongoId) {
+            Review.findByIdAndUpdate(rev.mongoId, { providerResponse: response }).catch(() => {});
+          }
           return { affectedRows: 1 };
         }
       }
@@ -543,6 +868,19 @@ export function handleMemoryQuery(sql, params = []) {
           u.phone = params[1] || u.phone;
           u.address = params[2] || u.address;
           u.city = params[3] || u.city;
+          if (params[4]) {
+            u.avatar = params[4];
+            u.profileImage = params[4];
+          }
+        }
+        if (mongoose.connection.readyState === 1 && u.mongoId) {
+          User.findByIdAndUpdate(u.mongoId, {
+            name: u.name,
+            phone: u.phone,
+            address: u.address,
+            city: u.city,
+            profileImage: u.avatar
+          }).catch(() => {});
         }
         return { affectedRows: 1 };
       }
@@ -557,6 +895,13 @@ export function handleMemoryQuery(sql, params = []) {
       const idx = memoryDb.favorites.findIndex(f => f.customer_id == cId && f.provider_id == pId);
       if (idx !== -1) {
         memoryDb.favorites.splice(idx, 1);
+        if (mongoose.connection.readyState === 1) {
+          const cust = memoryDb.users.find(u => u.id == cId);
+          const prov = memoryDb.service_providers.find(p => p.id == pId);
+          if (cust?.mongoId && prov?.mongoId) {
+            Favorite.deleteOne({ customerId: cust.mongoId, providerId: prov.mongoId }).catch(() => {});
+          }
+        }
         return { affectedRows: 1 };
       }
     }
@@ -564,7 +909,10 @@ export function handleMemoryQuery(sql, params = []) {
       const sId = params[0];
       const idx = memoryDb.services.findIndex(s => s.id == sId || s._id == sId);
       if (idx !== -1) {
-        memoryDb.services.splice(idx, 1);
+        const removed = memoryDb.services.splice(idx, 1)[0];
+        if (mongoose.connection.readyState === 1 && removed.mongoId) {
+          Service.findByIdAndDelete(removed.mongoId).catch(() => {});
+        }
         return { affectedRows: 1 };
       }
     }
@@ -573,4 +921,5 @@ export function handleMemoryQuery(sql, params = []) {
   return [];
 }
 
-export default { connectDB, query, memoryDb, getIsMongoConnected };
+export default { connectDB, query, memoryDb, getIsMongoConnected, getJwtSecret };
+

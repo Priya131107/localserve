@@ -1,7 +1,12 @@
+import dns from 'dns';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (e) {}
 
 import User from '../server/models/User.js';
 import ServiceProvider from '../server/models/ServiceProvider.js';
