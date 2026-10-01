@@ -1,15 +1,14 @@
 {
-  "framework": "vite",
   "buildCommand": "npm run build --prefix client",
   "outputDirectory": "client/dist",
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://localserve-pg3r.onrender.com/api/$1"
+      "source": "/api/:path*",
+      "destination": "https://localserve-pg3r.onrender.com/api/:path*"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ]
 }
