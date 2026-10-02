@@ -324,21 +324,46 @@ async function syncWithMongo() {
 }
 
 // Attempt MongoDB / Mongoose connection
+let _dbRetryCount = 0;
 export async function connectDB() {
   try {
     mongoose.set('strictQuery', false);
     await mongoose.connect(MONGO_URI, {
-      serverSelectionTimeoutMS: 5000
+      serverSelectionTimeoutMS: 8000,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+      retryWrites: true,
+      w: 'majority'
     });
     isMongoConnected = true;
+    _dbRetryCount = 0;
+    const host = MONGO_URI.includes('@') ? MONGO_URI.split('@')[1].split('/')[0] : 'localhost';
     console.log(`\n======================================================`);
-    console.log(`✅ [MongoDB Atlas] Connected successfully: ${MONGO_URI.split('@')[1] || MONGO_URI}`);
+    console.log(`✅ [MongoDB Atlas] Connected successfully: ${host}`);
     console.log(`======================================================\n`);
     await syncWithMongo();
     return mongoose.connection;
   } catch (error) {
     isMongoConnected = false;
-    console.log(`\nℹ️ [Database Engine] MongoDB connection fallback active (${error.message}).`);
+    const isWhitelistErr = error.message && error.message.toLowerCase().includes('whitelist');
+    if (_dbRetryCount === 0) {
+      // Only print detailed error on first attempt
+      if (isWhitelistErr) {
+        console.log(`\n⚠️  [MongoDB Atlas] IP NOT WHITELISTED`);
+        console.log(`   ➜ Fix: Atlas → Security → Network Access → Add IP Address → Allow Access from Anywhere (0.0.0.0/0)`);
+        console.log(`   ➜ App will use in-memory store until MongoDB is available.\n`);
+      } else {
+        console.log(`\nℹ️ [MongoDB] Offline - running with in-memory store. (${error.message.slice(0, 80)})\n`);
+      }
+    }
+    _dbRetryCount++;
+    // Retry once after 2 minutes silently, then stop
+    if (_dbRetryCount <= 3) {
+      const delay = _dbRetryCount * 120000; // 2min, 4min, 6min
+      setTimeout(() => {
+        if (!isMongoConnected) connectDB().catch(() => {});
+      }, delay);
+    }
     return null;
   }
 }
@@ -373,15 +398,32 @@ export function handleMemoryQuery(sql, params = []) {
 
     // 2. Users / Auth
     if (normalized.includes('users')) {
+      // Determine if this is a SELECT * (login) or a SELECT id,name,... (getMe/profile)
+      const isSelectAll = normalized.startsWith('select *') || normalized.includes('select * from');
+      const includesPassword = normalized.includes('password');
+      const shouldReturnPassword = isSelectAll || includesPassword;
+
+      const stripSensitive = (user) => {
+        if (shouldReturnPassword) return { ...user };
+        // eslint-disable-next-line no-unused-vars
+        const { password, ...safe } = user;
+        return safe;
+      };
+
       if (normalized.includes('where `email` = ?') || normalized.includes('where email = ?')) {
         const user = memoryDb.users.find(u => u.email.toLowerCase() === String(params[0]).toLowerCase());
-        return user ? [{ ...user }] : [];
+        return user ? [stripSensitive(user)] : [];
       }
       if (normalized.includes('where `id` = ?') || normalized.includes('where id = ?')) {
         const user = memoryDb.users.find(u => u.id === Number(params[0]) || u._id === String(params[0]));
-        return user ? [{ ...user }] : [];
+        return user ? [stripSensitive(user)] : [];
       }
-      return [...memoryDb.users];
+      // Support for getMe fallback using email param (string that looks like email)
+      if (params.length === 1 && String(params[0]).includes('@')) {
+        const user = memoryDb.users.find(u => u.email.toLowerCase() === String(params[0]).toLowerCase());
+        return user ? [stripSensitive(user)] : [];
+      }
+      return memoryDb.users.map(u => stripSensitive(u));
     }
 
     // 3. Service Providers Search & List

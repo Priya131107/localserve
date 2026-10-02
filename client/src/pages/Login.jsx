@@ -66,8 +66,8 @@ export default function Login() {
 
     setLoading(true);
     setServerWaking(false);
-    // Show server wake-up notice after 4 seconds (Render free tier cold start)
-    const wakeTimer = setTimeout(() => setServerWaking(true), 4000);
+    // Show server wake-up notice after 8 seconds (Render free tier cold start)
+    const wakeTimer = setTimeout(() => setServerWaking(true), 8000);
     try {
       const res = await login(loginEmail, loginPass);
       clearTimeout(wakeTimer);
@@ -285,18 +285,36 @@ export default function Login() {
             {serverWaking && (
               <div style={{
                 marginTop: '0.85rem',
-                padding: '0.75rem 1rem',
-                background: '#fef3c7',
+                padding: '0.85rem 1rem',
+                background: 'linear-gradient(135deg, #fefce8, #fef3c7)',
                 border: '1px solid #fbbf24',
                 borderRadius: 'var(--radius-md)',
                 fontSize: '0.83rem',
-                color: '#92400e',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '0.5rem'
+                color: '#78350f'
               }}>
-                <span>⏳</span>
-                <span><strong>Server is waking up</strong> — The free-tier backend may take up to 30 seconds to start. Please wait, your login will complete automatically.</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <span style={{ fontSize: '1.1rem' }}>⏳</span>
+                  <strong>Server is waking up...</strong>
+                </div>
+                <p style={{ margin: '0 0 0.6rem 0', lineHeight: '1.5' }}>
+                  The free-tier backend is starting up — this takes up to <strong>30 seconds</strong> on first use.
+                  Your login will complete automatically once it's ready.
+                </p>
+                {/* Animated progress bar */}
+                <div style={{ background: '#fde68a', borderRadius: '99px', height: '6px', overflow: 'hidden' }}>
+                  <div style={{
+                    height: '100%',
+                    background: 'linear-gradient(90deg, #f59e0b, #d97706)',
+                    borderRadius: '99px',
+                    animation: 'wakeupProgress 30s linear forwards'
+                  }} />
+                </div>
+                <style>{`
+                  @keyframes wakeupProgress {
+                    from { width: 5%; }
+                    to { width: 100%; }
+                  }
+                `}</style>
               </div>
             )}
           </form>

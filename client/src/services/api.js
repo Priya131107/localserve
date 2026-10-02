@@ -1,6 +1,25 @@
 const envApi = import.meta.env.VITE_API_URL || '';
 const BASE_URL = envApi ? (envApi.endsWith('/api') ? envApi : `${envApi.replace(/\/+$/, '')}/api`) : '/api';
 
+// Track server availability this session
+let _serverAlive = false;
+
+/**
+ * Ping the backend to wake it up early (Render free tier cold-start)
+ * Call this on app load so the server is warm before the user tries to log in.
+ */
+export async function pingServer() {
+  if (_serverAlive) return true;
+  try {
+    const controller = new AbortController();
+    const tid = setTimeout(() => controller.abort(), 35000);
+    const res = await fetch(`${BASE_URL}/health`, { signal: controller.signal });
+    clearTimeout(tid);
+    if (res.ok) { _serverAlive = true; return true; }
+  } catch { /* ignore - server may still be starting */ }
+  return false;
+}
+
 /**
  * Universal API Request Wrapper with retry support for Render cold-start
  */
@@ -13,22 +32,21 @@ async function request(endpoint, options = {}, retries = 2) {
     ...options.headers
   };
 
-  const config = {
-    ...options,
-    headers
-  };
+  const config = { ...options, headers };
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const controller = new AbortController();
-      // Give extra time on first attempt in case backend is waking up (Render free tier)
-      const timeoutId = setTimeout(() => controller.abort(), attempt === 0 ? 30000 : 15000);
+      // First attempt: 35s (Render free tier can take up to 30s to wake from sleep)
+      // Retries: 15s each
+      const timeoutId = setTimeout(() => controller.abort(), attempt === 0 ? 35000 : 15000);
 
       const response = await fetch(`${BASE_URL}${endpoint}`, {
         ...config,
         signal: controller.signal
       });
       clearTimeout(timeoutId);
+      _serverAlive = true;
 
       const contentType = response.headers.get('content-type') || '';
       
@@ -62,12 +80,13 @@ async function request(endpoint, options = {}, retries = 2) {
       const isNetworkError = error.name === 'AbortError' || error.name === 'TypeError' || error.message.includes('fetch');
       if (isNetworkError && attempt < retries) {
         console.warn(`API retry ${attempt + 1}/${retries} on ${endpoint}:`, error.message);
+        // Exponential backoff: 3s first retry, 6s second
         await new Promise(r => setTimeout(r, 3000 * (attempt + 1)));
         continue;
       }
       console.error(`API Error on ${endpoint}:`, error.message);
       if (error.name === 'AbortError') {
-        throw new Error('Request timed out. The server may be starting up — please try again in a few seconds.');
+        throw new Error('Server is taking too long to respond. It may be waking up — please wait a moment and try again.');
       }
       throw error;
     }

@@ -332,9 +332,9 @@ npm run dev
 - **Environment Variables**:
   - `PORT`: `5000`
   - `NODE_ENV`: `production`
-  - `MONGO_URI`: `<Your MongoDB Atlas URI>`
-  - `JWT_SECRET`: `<Your JWT Secret>`
-  - `CLIENT_URL`: `<Your Vercel Domain>`
+  - `MONGO_URI`: `mongodb+srv://ps1204628_db_user:fd5eAczCDkVX3DPs@cluster0.6ybwipi.mongodb.net/?appName=Cluster0`
+  - `JWT_SECRET`: `<Your JWT secret>`
+  - `CLIENT_URL`: `https://local-service-finder-weld.vercel.app/`
 
 ### 2. Frontend Deployment (Vercel)
 - **Root Directory**: `client`
@@ -342,7 +342,7 @@ npm run dev
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist`
 - **Environment Variables**:
-  - `VITE_API_URL`: `<Your Render/Railway Backend URL>`
+  - `VITE_API_URL`: `https://localserve-pg3r.onrender.com`
 
 ---
 

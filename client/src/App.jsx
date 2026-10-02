@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
+import { pingServer } from './services/api.js';
 
 // Components
 import Navbar from './components/Navbar';
@@ -31,6 +32,12 @@ export default function App() {
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [comparedProviders, setComparedProviders] = useState([]);
+
+  // Ping the backend on app load to wake up Render.com free-tier server early
+  // so users don't wait when they navigate to login/register
+  useEffect(() => {
+    pingServer();
+  }, []);
 
   const handleToggleCompare = (provider) => {
     setComparedProviders(prev => {
