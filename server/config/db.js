@@ -65,33 +65,33 @@ export async function initMemoryDb() {
   ];
 
   memoryDb.users = [
-    { id: 1, _id: 'user_1', name: 'Aman Sharma', email: 'customer@example.com', password: hashedPassword, role: 'customer', phone: '+91 98290 12345', address: 'B-42, Malviya Nagar', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 2, _id: 'user_2', name: 'Pooja Verma', email: 'pooja@example.com', password: hashedPassword, role: 'customer', phone: '+91 98290 54321', address: 'Plot 18, Vaishali Nagar', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-02') },
-    { id: 3, _id: 'user_3', name: 'Rohan Mehta', email: 'rohan@example.com', password: hashedPassword, role: 'customer', phone: '+91 98291 98765', address: 'Flat 302, Mansarovar', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-03') },
-    { id: 4, _id: 'user_4', name: 'Ramesh Kumar', email: 'ramesh.electric@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 11223', address: 'Shop 12, Main Market, Malviya Nagar', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 5, _id: 'user_5', name: 'Rajesh Sharma', email: 'rajesh.plumber@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 22334', address: 'Near Nursery Circle, Vaishali Nagar', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 6, _id: 'user_6', name: 'Sunita Devi', email: 'sunita.cleaning@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 33445', address: 'Sector 7, Mansarovar', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 7, _id: 'user_7', name: 'Amit Patel', email: 'amit.mechanic@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 44556', address: 'MI Road, Near Panch Batti', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 8, _id: 'user_8', name: 'Suresh Meena', email: 'suresh.ac@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 55667', address: 'Mahal Road, Jagatpura', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 9, _id: 'user_9', name: 'Vikram Singh', email: 'vikram.carpenter@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 66778', address: 'Gali No. 4, Raja Park', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 10, _id: 'user_10', name: 'Neha Gupta', email: 'neha.salon@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 77889', address: 'Tonk Road, Gopalpura Mode', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 11, _id: 'user_11', name: 'Priya Verma', email: 'priya.tutor@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 88990', address: 'C-Scheme, Ashok Nagar', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 12, _id: 'user_12', name: 'Deepak Soni', email: 'deepak.tech@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 99001', address: 'Silver Square, Bhagwan Das Road', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 13, _id: 'user_13', name: 'Mukesh Prajapat', email: 'mukesh.paint@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 10203', address: 'Vidhyadhar Nagar Sector 2', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') },
-    { id: 14, _id: 'user_14', name: 'System Administrator', email: 'admin@example.com', password: hashedPassword, role: 'admin', phone: '+91 99999 00000', address: 'Headquarters, Tech Hub', city: 'Jaipur', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80', profileImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80', created_at: new Date('2026-08-01') }
+    { id: 1, _id: 'user_1', name: 'Aman Sharma', email: 'customer@example.com', password: hashedPassword, role: 'customer', phone: '+91 98290 12345', address: 'B-42, Malviya Nagar', city: 'Jaipur', avatar: '/avatars/aman.jpg', profileImage: '/avatars/aman.jpg', created_at: new Date('2026-08-01') },
+    { id: 2, _id: 'user_2', name: 'Pooja Verma', email: 'pooja@example.com', password: hashedPassword, role: 'customer', phone: '+91 98290 54321', address: 'Plot 18, Vaishali Nagar', city: 'Jaipur', avatar: '/avatars/pooja.jpg', profileImage: '/avatars/pooja.jpg', created_at: new Date('2026-08-02') },
+    { id: 3, _id: 'user_3', name: 'Rohan Mehta', email: 'rohan@example.com', password: hashedPassword, role: 'customer', phone: '+91 98291 98765', address: 'Flat 302, Mansarovar', city: 'Jaipur', avatar: '/avatars/rohan.jpg', profileImage: '/avatars/rohan.jpg', created_at: new Date('2026-08-03') },
+    { id: 4, _id: 'user_4', name: 'Ramesh Kumar', email: 'ramesh.electric@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 11223', address: 'Shop 12, Main Market, Malviya Nagar', city: 'Jaipur', avatar: '/avatars/ramesh.jpg', profileImage: '/avatars/ramesh.jpg', created_at: new Date('2026-08-01') },
+    { id: 5, _id: 'user_5', name: 'Rajesh Sharma', email: 'rajesh.plumber@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 22334', address: 'Near Nursery Circle, Vaishali Nagar', city: 'Jaipur', avatar: '/avatars/rajesh.jpg', profileImage: '/avatars/rajesh.jpg', created_at: new Date('2026-08-01') },
+    { id: 6, _id: 'user_6', name: 'Sunita Devi', email: 'sunita.cleaning@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 33445', address: 'Sector 7, Mansarovar', city: 'Jaipur', avatar: '/avatars/sunita.jpg', profileImage: '/avatars/sunita.jpg', created_at: new Date('2026-08-01') },
+    { id: 7, _id: 'user_7', name: 'Amit Patel', email: 'amit.mechanic@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 44556', address: 'MI Road, Near Panch Batti', city: 'Jaipur', avatar: '/avatars/amit.jpg', profileImage: '/avatars/amit.jpg', created_at: new Date('2026-08-01') },
+    { id: 8, _id: 'user_8', name: 'Suresh Meena', email: 'suresh.ac@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 55667', address: 'Mahal Road, Jagatpura', city: 'Jaipur', avatar: '/avatars/suresh.jpg', profileImage: '/avatars/suresh.jpg', created_at: new Date('2026-08-01') },
+    { id: 9, _id: 'user_9', name: 'Vikram Singh Suthar', email: 'vikram.carpenter@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 66778', address: 'Gali No. 4, Raja Park', city: 'Jaipur', avatar: '/avatars/vikram.jpg', profileImage: '/avatars/vikram.jpg', created_at: new Date('2026-08-01') },
+    { id: 10, _id: 'user_10', name: 'Neha Gupta', email: 'neha.salon@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 77889', address: 'Tonk Road, Gopalpura Mode', city: 'Jaipur', avatar: '/avatars/neha.jpg', profileImage: '/avatars/neha.jpg', created_at: new Date('2026-08-01') },
+    { id: 11, _id: 'user_11', name: 'Priya Verma', email: 'priya.tutor@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 88990', address: 'C-Scheme, Ashok Nagar', city: 'Jaipur', avatar: '/avatars/priya.jpg', profileImage: '/avatars/priya.jpg', created_at: new Date('2026-08-01') },
+    { id: 12, _id: 'user_12', name: 'Deepak Soni', email: 'deepak.tech@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 99001', address: 'Silver Square, Bhagwan Das Road', city: 'Jaipur', avatar: '/avatars/deepak.jpg', profileImage: '/avatars/deepak.jpg', created_at: new Date('2026-08-01') },
+    { id: 13, _id: 'user_13', name: 'Mukesh Prajapat', email: 'mukesh.paint@example.com', password: hashedPassword, role: 'provider', phone: '+91 94140 10203', address: 'Vidhyadhar Nagar Sector 2', city: 'Jaipur', avatar: '/avatars/mukesh.jpg', profileImage: '/avatars/mukesh.jpg', created_at: new Date('2026-08-01') },
+    { id: 14, _id: 'user_14', name: 'LocalServe Admin', email: 'admin@example.com', password: hashedPassword, role: 'admin', phone: '+91 99999 00000', address: 'Headquarters, Tech Hub', city: 'Jaipur', avatar: '/avatars/aman.jpg', profileImage: '/avatars/aman.jpg', created_at: new Date('2026-08-01') }
   ];
 
   memoryDb.service_providers = [
-    { id: 1, _id: 'sp_1', user_id: 4, category_id: 1, business_name: 'Ramesh Electrical Works', tagline: 'Certified 24/7 Electrical Care & Installation', bio: 'Experienced government licensed electrician with 8+ years specializing in residential rewiring, short-circuit diagnostics, inverter setups, and smart switch automation.', experience_years: 8, hourly_rate: 350.00, city: 'Jaipur', area: 'Malviya Nagar', latitude: 26.8529, longitude: 75.8052, is_available: 1, is_emergency: 1, working_hours: '24/7 Emergency Service', rating: 4.90, total_reviews: 24, verified: 1, verificationStatus: 'verified' },
-    { id: 2, _id: 'sp_2', user_id: 5, category_id: 2, business_name: 'Sharma Plumbing Solutions', tagline: 'Reliable Pipe Repair, Fixtures & Leakage Experts', bio: 'Providing guaranteed fast plumbing services across Vaishali Nagar. Specializing in high-pressure water motors, concealed pipeline leak detection, and sanitary ware installation.', experience_years: 6, hourly_rate: 300.00, city: 'Jaipur', area: 'Vaishali Nagar', latitude: 26.9089, longitude: 75.7423, is_available: 1, is_emergency: 1, working_hours: '7:30 AM - 9:00 PM', rating: 4.85, total_reviews: 19, verified: 1, verificationStatus: 'verified' },
-    { id: 3, _id: 'sp_3', user_id: 6, category_id: 3, business_name: 'SparklePro Deep Cleaners', tagline: 'Eco-Friendly Residential & Commercial Deep Cleaning', bio: 'Led by Sunita Devi with a 6-member trained team. We use industrial steam cleaners and eco-friendly disinfectants for complete home sanitation, kitchen de-greasing, and sofa shampooing.', experience_years: 5, hourly_rate: 450.00, city: 'Jaipur', area: 'Mansarovar', latitude: 26.8612, longitude: 75.7667, is_available: 1, is_emergency: 0, working_hours: '8:00 AM - 7:00 PM', rating: 4.92, total_reviews: 31, verified: 1, verificationStatus: 'verified' },
-    { id: 4, _id: 'sp_4', user_id: 7, category_id: 4, business_name: 'Express Auto Mobile Garage', tagline: '24/7 Roadside Assistance & Engine Mechanics', bio: 'Immediate breakdown assistance, battery jump start, tyre puncture replacement, and complete on-site 2-wheeler and 4-wheeler periodic servicing.', experience_years: 9, hourly_rate: 500.00, city: 'Jaipur', area: 'MI Road', latitude: 26.9184, longitude: 75.8115, is_available: 1, is_emergency: 1, working_hours: '24/7 Emergency Service', rating: 4.78, total_reviews: 15, verified: 1, verificationStatus: 'verified' },
-    { id: 5, _id: 'sp_5', user_id: 8, category_id: 5, business_name: 'Cool Breeze AC & Refrigeration', tagline: 'Certified HVAC Technicians for all AC & Fridge Brands', bio: 'Specialists in Split/Window AC gas charging, PCB board repairs, deep jet-pump foam wash, and inverter refrigerator troubleshooting with genuine parts.', experience_years: 7, hourly_rate: 400.00, city: 'Jaipur', area: 'Jagatpura', latitude: 26.8228, longitude: 75.8654, is_available: 1, is_emergency: 1, working_hours: '8:00 AM - 9:00 PM', rating: 4.88, total_reviews: 22, verified: 1, verificationStatus: 'verified' },
-    { id: 6, _id: 'sp_6', user_id: 9, category_id: 6, business_name: 'Royal Wood Art & Carpentry', tagline: 'Custom Furniture Design, Door Locks & Modern Fittings', bio: 'Master craftsman with over a decade of experience crafting custom modular wardrobes, hydraulic bed repairs, door closers, and luxury wood polishing.', experience_years: 11, hourly_rate: 400.00, city: 'Jaipur', area: 'Raja Park', latitude: 26.8973, longitude: 75.8336, is_available: 1, is_emergency: 0, working_hours: '9:00 AM - 8:00 PM', rating: 4.80, total_reviews: 14, verified: 1, verificationStatus: 'verified' },
-    { id: 7, _id: 'sp_7', user_id: 10, category_id: 7, business_name: 'Glow & Grace Home Salon', tagline: 'Premium Beauty, Hair Styling & Bridal Care at Home', bio: 'Certified makeup artist & cosmetologist offering hygienic salon-at-home services. We use single-use kits, international skin products, and tailored bridal packages.', experience_years: 4, hourly_rate: 600.00, city: 'Jaipur', area: 'Tonk Road', latitude: 26.8741, longitude: 75.7989, is_available: 1, is_emergency: 0, working_hours: '10:00 AM - 7:00 PM', rating: 4.95, total_reviews: 28, verified: 1, verificationStatus: 'verified' },
-    { id: 8, _id: 'sp_8', user_id: 11, category_id: 8, business_name: 'Priya Verma Academic Mentorship', tagline: 'Personalized STEM & Board Exam Home Tutoring', bio: 'M.Sc. Gold Medalist with 6 years experience mentoring Class 8–12 CBSE/ICSE students in Mathematics, Physics, and competitive foundation with interactive problem solving.', experience_years: 6, hourly_rate: 500.00, city: 'Jaipur', area: 'C-Scheme', latitude: 26.9110, longitude: 75.8012, is_available: 1, is_emergency: 0, working_hours: '3:00 PM - 8:30 PM', rating: 4.98, total_reviews: 36, verified: 1, verificationStatus: 'verified' },
-    { id: 9, _id: 'sp_9', user_id: 12, category_id: 9, business_name: 'TechDoctor Laptop & Network Clinic', tagline: 'Doorstep Computer Diagnostics, Screen & Chip Repair', bio: 'Certified hardware and networking engineer. Fast diagnosis for slow laptops, screen replacements, virus cleaning, printer sharing, and home WiFi mesh setup.', experience_years: 7, hourly_rate: 450.00, city: 'Jaipur', area: 'Bani Park', latitude: 26.9312, longitude: 75.7925, is_available: 1, is_emergency: 0, working_hours: '9:30 AM - 8:30 PM', rating: 4.82, total_reviews: 18, verified: 1, verificationStatus: 'verified' },
-    { id: 10, _id: 'sp_10', user_id: 13, category_id: 10, business_name: 'Jaipur Palette Wall Master', tagline: 'Luxury Wall Painting, Textures & Waterproofing', bio: 'Over 12 years creating vibrant living spaces using Asian Paints Royale, damp-proof sealants, stencils, and dust-free mechanized sanding tools.', experience_years: 12, hourly_rate: 350.00, city: 'Jaipur', area: 'Vidhyadhar Nagar', latitude: 26.9641, longitude: 75.7789, is_available: 1, is_emergency: 0, working_hours: '8:30 AM - 6:30 PM', rating: 4.75, total_reviews: 12, verified: 1, verificationStatus: 'verified' }
+    { id: 1, _id: 'sp_1', user_id: 4, category_id: 1, business_name: 'Ramesh Electrical Works & Inverter Service', tagline: 'Certified 24/7 Electrical Care & Installation', bio: 'Experienced government licensed electrician with 8+ years specializing in residential rewiring, short-circuit diagnostics, inverter setups, and smart switch automation.', experience_years: 8, hourly_rate: 350.00, city: 'Jaipur', area: 'Malviya Nagar', latitude: 26.8529, longitude: 75.8052, is_available: 1, is_emergency: 1, working_hours: '24/7 Emergency Service', rating: 4.90, total_reviews: 24, verified: 1, verificationStatus: 'verified', avatar: '/avatars/ramesh.jpg' },
+    { id: 2, _id: 'sp_2', user_id: 5, category_id: 2, business_name: 'Sharma Plumbing & Sanitary Solutions', tagline: 'Reliable Pipe Repair, Fixtures & Leakage Experts', bio: 'Providing guaranteed fast plumbing services across Vaishali Nagar. Specializing in high-pressure water motors, concealed pipeline leak detection, and sanitary ware installation.', experience_years: 6, hourly_rate: 300.00, city: 'Jaipur', area: 'Vaishali Nagar', latitude: 26.9089, longitude: 75.7423, is_available: 1, is_emergency: 1, working_hours: '7:30 AM - 9:00 PM', rating: 4.85, total_reviews: 19, verified: 1, verificationStatus: 'verified', avatar: '/avatars/rajesh.jpg' },
+    { id: 3, _id: 'sp_3', user_id: 6, category_id: 3, business_name: 'Swachh Ghar Deep Cleaning Services', tagline: 'Eco-Friendly Residential & Commercial Deep Cleaning', bio: 'Led by Sunita Devi with a 6-member trained team. We use industrial steam cleaners and eco-friendly disinfectants for complete home sanitation, kitchen de-greasing, and sofa shampooing.', experience_years: 5, hourly_rate: 450.00, city: 'Jaipur', area: 'Mansarovar', latitude: 26.8612, longitude: 75.7667, is_available: 1, is_emergency: 0, working_hours: '8:00 AM - 7:00 PM', rating: 4.92, total_reviews: 31, verified: 1, verificationStatus: 'verified', avatar: '/avatars/sunita.jpg' },
+    { id: 4, _id: 'sp_4', user_id: 7, category_id: 4, business_name: 'Patel 24/7 Car & Bike Roadside Garage', tagline: '24/7 Roadside Assistance & Engine Mechanics', bio: 'Immediate breakdown assistance, battery jump start, tyre puncture replacement, and complete on-site 2-wheeler and 4-wheeler periodic servicing.', experience_years: 9, hourly_rate: 500.00, city: 'Jaipur', area: 'MI Road', latitude: 26.9184, longitude: 75.8115, is_available: 1, is_emergency: 1, working_hours: '24/7 Emergency Service', rating: 4.78, total_reviews: 15, verified: 1, verificationStatus: 'verified', avatar: '/avatars/amit.jpg' },
+    { id: 5, _id: 'sp_5', user_id: 8, category_id: 5, business_name: 'Meena AC & Refrigeration Care', tagline: 'Certified HVAC Technicians for all AC & Fridge Brands', bio: 'Specialists in Split/Window AC gas charging, PCB board repairs, deep jet-pump foam wash, and inverter refrigerator troubleshooting with genuine parts.', experience_years: 7, hourly_rate: 400.00, city: 'Jaipur', area: 'Jagatpura', latitude: 26.8228, longitude: 75.8654, is_available: 1, is_emergency: 1, working_hours: '8:00 AM - 9:00 PM', rating: 4.88, total_reviews: 22, verified: 1, verificationStatus: 'verified', avatar: '/avatars/suresh.jpg' },
+    { id: 6, _id: 'sp_6', user_id: 9, category_id: 6, business_name: 'Jangid Wood Craft & Furniture Art', tagline: 'Custom Furniture Design, Door Locks & Modern Fittings', bio: 'Master craftsman with over a decade of experience crafting custom modular wardrobes, hydraulic bed repairs, door closers, and luxury wood polishing.', experience_years: 11, hourly_rate: 400.00, city: 'Jaipur', area: 'Raja Park', latitude: 26.8973, longitude: 75.8336, is_available: 1, is_emergency: 0, working_hours: '9:00 AM - 8:00 PM', rating: 4.80, total_reviews: 14, verified: 1, verificationStatus: 'verified', avatar: '/avatars/vikram.jpg' },
+    { id: 7, _id: 'sp_7', user_id: 10, category_id: 7, business_name: 'Shringar Herbal Beauty & Bridal Home Salon', tagline: 'Premium Herbal Beauty, Hair Styling & Bridal Care at Home', bio: 'Certified makeup artist & cosmetologist offering hygienic salon-at-home services. We use single-use herbal kits, international skin products, and tailored bridal packages.', experience_years: 4, hourly_rate: 600.00, city: 'Jaipur', area: 'Tonk Road', latitude: 26.8741, longitude: 75.7989, is_available: 1, is_emergency: 0, working_hours: '10:00 AM - 7:00 PM', rating: 4.95, total_reviews: 28, verified: 1, verificationStatus: 'verified', avatar: '/avatars/neha.jpg' },
+    { id: 8, _id: 'sp_8', user_id: 11, category_id: 8, business_name: 'Vidya Mandir Home Tuitions & Mentorship', tagline: 'Personalized STEM & Board Exam Home Tutoring', bio: 'M.Sc. Gold Medalist with 6 years experience mentoring Class 8–12 CBSE/ICSE students in Mathematics, Physics, and competitive foundation with interactive problem solving.', experience_years: 6, hourly_rate: 500.00, city: 'Jaipur', area: 'C-Scheme', latitude: 26.9110, longitude: 75.8012, is_available: 1, is_emergency: 0, working_hours: '3:00 PM - 8:30 PM', rating: 4.98, total_reviews: 36, verified: 1, verificationStatus: 'verified', avatar: '/avatars/priya.jpg' },
+    { id: 9, _id: 'sp_9', user_id: 12, category_id: 9, business_name: 'Soni Digital Laptop & Network Clinic', tagline: 'Doorstep Computer Diagnostics, Screen & Chip Repair', bio: 'Certified hardware and networking engineer. Fast diagnosis for slow laptops, screen replacements, virus cleaning, printer sharing, and home WiFi mesh setup.', experience_years: 7, hourly_rate: 450.00, city: 'Jaipur', area: 'Bani Park', latitude: 26.9312, longitude: 75.7925, is_available: 1, is_emergency: 0, working_hours: '9:30 AM - 8:30 PM', rating: 4.82, total_reviews: 18, verified: 1, verificationStatus: 'verified', avatar: '/avatars/deepak.jpg' },
+    { id: 10, _id: 'sp_10', user_id: 13, category_id: 10, business_name: 'Prajapat Rangoli Wall Masters & Painting', tagline: 'Luxury Wall Painting, Textures & Waterproofing', bio: 'Over 12 years creating vibrant living spaces using Asian Paints Royale, damp-proof sealants, stencils, and dust-free mechanized sanding tools.', experience_years: 12, hourly_rate: 350.00, city: 'Jaipur', area: 'Vidhyadhar Nagar', latitude: 26.9641, longitude: 75.7789, is_available: 1, is_emergency: 0, working_hours: '8:30 AM - 6:30 PM', rating: 4.75, total_reviews: 12, verified: 1, verificationStatus: 'verified', avatar: '/avatars/mukesh.jpg' }
   ];
 
   memoryDb.services = [
@@ -288,13 +288,24 @@ async function syncWithMongo() {
         const matchingUser = memoryDb.users.find(u => String(u.mongoId) === String(mp.user) || u.email === mp.email);
         const userId = matchingUser ? matchingUser.id : 4;
         const exists = memoryDb.service_providers.find(p => p.user_id === userId || String(p.mongoId) === String(mp._id));
-        if (!exists) {
+        if (exists) {
+          exists.mongoId = mp._id;
+          exists.userId = mp.user;
+          exists.user_mongo_id = mp.user;
+          exists.business_name = mp.businessName || exists.business_name;
+          exists.tagline = mp.tagline || exists.tagline;
+          exists.hourly_rate = mp.hourlyRate || exists.hourly_rate;
+          exists.is_available = mp.isAvailable ? 1 : 0;
+          exists.is_emergency = mp.isEmergency ? 1 : 0;
+        } else {
           const newId = memoryDb.service_providers.length ? Math.max(...memoryDb.service_providers.map(p => p.id || 0)) + 1 : 1;
           memoryDb.service_providers.push({
             id: newId,
             _id: `sp_${newId}`,
             mongoId: mp._id,
             user_id: userId,
+            userId: mp.user,
+            user_mongo_id: mp.user,
             category_id: mp.categoryId || 1,
             business_name: mp.businessName,
             tagline: mp.tagline || '',
@@ -323,55 +334,125 @@ async function syncWithMongo() {
   }
 }
 
-// Attempt MongoDB / Mongoose connection
-let _dbRetryCount = 0;
+// ─────────────────────────────────────────────────────────────────────────────
+// MongoDB Connection Manager
+// ─────────────────────────────────────────────────────────────────────────────
+let _retryCount = 0;
+let _retryTimer = null;
+
+function diagnoseMongoError(err) {
+  const msg = (err.message || '').toLowerCase();
+  if (msg.includes('querysrv') || msg.includes('enotfound') || msg.includes('econnrefused') || msg.includes('enoent')) {
+    return {
+      type: 'CLUSTER_PAUSED',
+      tip: [
+        'Your MongoDB Atlas FREE cluster is AUTO-PAUSED.',
+        'To fix: go to https://cloud.mongodb.com',
+        '  -> Databases -> Resume Cluster0',
+        '  -> Security -> Network Access -> Add 0.0.0.0/0'
+      ]
+    };
+  }
+  if (msg.includes('whitelist') || msg.includes('not whitelisted')) {
+    return {
+      type: 'IP_BLOCKED',
+      tip: ['Your IP is blocked on MongoDB Atlas.', 'Fix: Atlas -> Security -> Network Access -> Add 0.0.0.0/0']
+    };
+  }
+  if (msg.includes('authentication') || msg.includes('auth failed')) {
+    return { type: 'AUTH_FAILED', tip: ['Wrong credentials. Check MONGO_URI in .env file.'] };
+  }
+  return { type: 'CONN_ERROR', tip: [(err.message || 'Unknown error').slice(0, 100)] };
+}
+
 export async function connectDB() {
+  if (_retryTimer) { clearTimeout(_retryTimer); _retryTimer = null; }
   try {
     mongoose.set('strictQuery', false);
     await mongoose.connect(MONGO_URI, {
-      serverSelectionTimeoutMS: 8000,
-      connectTimeoutMS: 10000,
-      socketTimeoutMS: 45000,
+      serverSelectionTimeoutMS: 12000,
+      connectTimeoutMS: 15000,
+      socketTimeoutMS: 60000,
+      heartbeatFrequencyMS: 10000,
+      maxPoolSize: 5,
+      minPoolSize: 1,
       retryWrites: true,
       w: 'majority'
     });
     isMongoConnected = true;
-    _dbRetryCount = 0;
+    _retryCount = 0;
     const host = MONGO_URI.includes('@') ? MONGO_URI.split('@')[1].split('/')[0] : 'localhost';
-    console.log(`\n======================================================`);
-    console.log(`✅ [MongoDB Atlas] Connected successfully: ${host}`);
-    console.log(`======================================================\n`);
+    console.log('\n======================================================');
+    console.log('  MongoDB Atlas CONNECTED: ' + host);
+    console.log('======================================================\n');
     await syncWithMongo();
     return mongoose.connection;
   } catch (error) {
     isMongoConnected = false;
-    const isWhitelistErr = error.message && error.message.toLowerCase().includes('whitelist');
-    if (_dbRetryCount === 0) {
-      // Only print detailed error on first attempt
-      if (isWhitelistErr) {
-        console.log(`\n⚠️  [MongoDB Atlas] IP NOT WHITELISTED`);
-        console.log(`   ➜ Fix: Atlas → Security → Network Access → Add IP Address → Allow Access from Anywhere (0.0.0.0/0)`);
-        console.log(`   ➜ App will use in-memory store until MongoDB is available.\n`);
-      } else {
-        console.log(`\nℹ️ [MongoDB] Offline - running with in-memory store. (${error.message.slice(0, 80)})\n`);
-      }
+    const { type, tip } = diagnoseMongoError(error);
+    if (_retryCount === 0) {
+      console.log('\n======================================================');
+      console.log('  MongoDB OFFLINE [' + type + ']');
+      console.log('------------------------------------------------------');
+      tip.forEach(line => console.log('  ' + line));
+      console.log('------------------------------------------------------');
+      console.log('  App running with in-memory store.');
+      console.log('  Data will be lost on server restart!');
+      console.log('======================================================\n');
     }
-    _dbRetryCount++;
-    // Retry once after 2 minutes silently, then stop
-    if (_dbRetryCount <= 3) {
-      const delay = _dbRetryCount * 120000; // 2min, 4min, 6min
-      setTimeout(() => {
-        if (!isMongoConnected) connectDB().catch(() => {});
-      }, delay);
+    _retryCount++;
+    const delays = [30, 60, 120, 300, 600];
+    const delaySec = delays[Math.min(_retryCount - 1, delays.length - 1)];
+    if (_retryCount <= delays.length) {
+      console.log('  [MongoDB] Retry ' + _retryCount + '/' + delays.length + ' in ' + delaySec + 's...');
+      _retryTimer = setTimeout(() => { if (!isMongoConnected) connectDB().catch(() => {}); }, delaySec * 1000);
+    } else {
+      console.log('  [MongoDB] Max retries reached. Fix Atlas then restart server.\n');
     }
     return null;
   }
 }
 
+mongoose.connection.on('connected', () => {
+  if (!isMongoConnected) {
+    isMongoConnected = true;
+    console.log('\n[MongoDB] Reconnected!');
+    syncWithMongo().catch(() => {});
+  }
+});
+mongoose.connection.on('disconnected', () => {
+  if (isMongoConnected) { isMongoConnected = false; console.log('[MongoDB] Disconnected.'); }
+});
+mongoose.connection.on('error', () => { isMongoConnected = false; });
+
 connectDB();
 
 export function getIsMongoConnected() {
   return isMongoConnected;
+}
+
+export function resolveUserId(val) {
+  if (val === null || val === undefined) return null;
+  const str = String(val);
+  const user = memoryDb.users.find(u => 
+    String(u.id) === str || 
+    String(u._id) === str || 
+    (u.mongoId && String(u.mongoId) === str)
+  );
+  return user ? user.id : val;
+}
+
+export function resolveProviderId(val) {
+  if (val === null || val === undefined) return null;
+  const str = String(val);
+  const prov = memoryDb.service_providers.find(p => 
+    String(p.id) === str || 
+    String(p._id) === str || 
+    (p.mongoId && String(p.mongoId) === str) ||
+    String(p.user_id) === str ||
+    (p.userId && String(p.userId) === str)
+  );
+  return prov ? prov.id : val;
 }
 
 /**
@@ -415,7 +496,12 @@ export function handleMemoryQuery(sql, params = []) {
         return user ? [stripSensitive(user)] : [];
       }
       if (normalized.includes('where `id` = ?') || normalized.includes('where id = ?')) {
-        const user = memoryDb.users.find(u => u.id === Number(params[0]) || u._id === String(params[0]));
+        const target = String(params[0]);
+        const user = memoryDb.users.find(u => 
+          String(u.id) === target || 
+          String(u._id) === target || 
+          (u.mongoId && String(u.mongoId) === target)
+        );
         return user ? [stripSensitive(user)] : [];
       }
       // Support for getMe fallback using email param (string that looks like email)
@@ -429,10 +515,10 @@ export function handleMemoryQuery(sql, params = []) {
     // 3. Service Providers Search & List
     if (normalized.includes('service_providers')) {
       let results = memoryDb.service_providers.map(p => {
-        const user = memoryDb.users.find(u => u.id === p.user_id || u._id === String(p.user_id)) || {};
+        const user = memoryDb.users.find(u => u.id === p.user_id || u._id === String(p.user_id) || (u.mongoId && String(u.mongoId) === String(p.user_id))) || {};
         const cat = memoryDb.categories.find(c => c.id === p.category_id || c._id === String(p.category_id)) || {};
-        const provServices = memoryDb.services.filter(s => (s.provider_id === p.id || s.provider_id === p._id) && s.is_active);
-        const provReviews = memoryDb.reviews.filter(r => r.provider_id === p.id || r.provider_id === p._id);
+        const provServices = memoryDb.services.filter(s => (s.provider_id === p.id || s.provider_id === p._id || (p.mongoId && String(s.provider_id) === String(p.mongoId))) && s.is_active);
+        const provReviews = memoryDb.reviews.filter(r => r.provider_id === p.id || r.provider_id === p._id || (p.mongoId && String(r.provider_id) === String(p.mongoId)));
         
         return {
           ...p,
@@ -449,12 +535,25 @@ export function handleMemoryQuery(sql, params = []) {
         };
       });
 
-      if (normalized.includes('where `id` = ?') || normalized.includes('where p.`id` = ?') || normalized.includes('where sp.id = ?')) {
-        const found = results.find(p => p.id === Number(params[0]) || p._id === String(params[0]));
+      if (normalized.includes('where `id` = ?') || normalized.includes('where p.`id` = ?') || normalized.includes('where sp.id = ?') || normalized.includes('where id = ?')) {
+        const target = String(params[0]);
+        const found = results.find(p => 
+          String(p.id) === target || 
+          String(p._id) === target || 
+          (p.mongoId && String(p.mongoId) === target)
+        );
         return found ? [found] : [];
       }
-      if (normalized.includes('where `user_id` = ?') || normalized.includes('where sp.user_id = ?')) {
-        const found = results.find(p => p.user_id === Number(params[0]) || p.user_id === String(params[0]));
+      if (normalized.includes('user_id = ?') || normalized.includes('`user_id` = ?')) {
+        const target = String(params[0]);
+        const resolvedUId = resolveUserId(target);
+        const found = results.find(p => 
+          String(p.user_id) === String(resolvedUId) || 
+          String(p.user_id) === target ||
+          String(p.userId) === target ||
+          String(p.user_mongo_id) === target ||
+          (p.mongoId && String(p.mongoId) === target)
+        );
         return found ? [found] : [];
       }
       return results;
@@ -462,11 +561,21 @@ export function handleMemoryQuery(sql, params = []) {
 
     // 4. Services
     if (normalized.includes('services')) {
-      if (normalized.includes('where `provider_id` = ?') || normalized.includes('where provider_id = ?')) {
-        return memoryDb.services.filter(s => s.provider_id === Number(params[0]) || s.provider_id === String(params[0]));
+      if (normalized.includes('provider_id = ?') || normalized.includes('`provider_id` = ?')) {
+        const target = String(params[0]);
+        const resolvedPId = resolveProviderId(target);
+        return memoryDb.services.filter(s => 
+          String(s.provider_id) === String(resolvedPId) || 
+          String(s.provider_id) === target
+        );
       }
       if (normalized.includes('where `id` = ?') || normalized.includes('where id = ?')) {
-        const s = memoryDb.services.find(s => s.id === Number(params[0]) || s._id === String(params[0]));
+        const target = String(params[0]);
+        const s = memoryDb.services.find(s => 
+          String(s.id) === target || 
+          String(s._id) === target || 
+          (s.mongoId && String(s.mongoId) === target)
+        );
         return s ? [s] : [];
       }
       return [...memoryDb.services];
@@ -475,9 +584,9 @@ export function handleMemoryQuery(sql, params = []) {
     // 5. Bookings
     if (normalized.includes('bookings')) {
       let results = memoryDb.bookings.map(b => {
-        const cust = memoryDb.users.find(u => u.id === b.customer_id || u._id === String(b.customer_id)) || {};
-        const prov = memoryDb.service_providers.find(p => p.id === b.provider_id || p._id === String(b.provider_id)) || {};
-        const provUser = memoryDb.users.find(u => u.id === prov.user_id || u._id === String(prov.user_id)) || {};
+        const cust = memoryDb.users.find(u => u.id === b.customer_id || u._id === String(b.customer_id) || (u.mongoId && String(u.mongoId) === String(b.customer_id))) || {};
+        const prov = memoryDb.service_providers.find(p => p.id === b.provider_id || p._id === String(b.provider_id) || (p.mongoId && String(p.mongoId) === String(b.provider_id))) || {};
+        const provUser = memoryDb.users.find(u => u.id === prov.user_id || u._id === String(prov.user_id) || (u.mongoId && String(u.mongoId) === String(prov.user_id))) || {};
         const rev = memoryDb.reviews.find(r => r.booking_id === b.id || r.booking_id === b._id);
         return {
           ...b,
@@ -495,14 +604,29 @@ export function handleMemoryQuery(sql, params = []) {
         };
       });
 
-      if (normalized.includes('where b.`customer_id` = ?') || normalized.includes('where customer_id = ?')) {
-        return results.filter(b => b.customer_id === Number(params[0]) || b.customer_id === String(params[0])).sort((a,b) => b.id - a.id);
+      if (normalized.includes('customer_id = ?') || normalized.includes('`customer_id` = ?')) {
+        const target = String(params[0]);
+        const resolvedUId = resolveUserId(target);
+        return results.filter(b => 
+          String(b.customer_id) === String(resolvedUId) || 
+          String(b.customer_id) === target
+        ).sort((a,b) => b.id - a.id);
       }
-      if (normalized.includes('where b.`provider_id` = ?') || normalized.includes('where provider_id = ?')) {
-        return results.filter(b => b.provider_id === Number(params[0]) || b.provider_id === String(params[0])).sort((a,b) => b.id - a.id);
+      if (normalized.includes('provider_id = ?') || normalized.includes('`provider_id` = ?')) {
+        const target = String(params[0]);
+        const resolvedPId = resolveProviderId(target);
+        return results.filter(b => 
+          String(b.provider_id) === String(resolvedPId) || 
+          String(b.provider_id) === target
+        ).sort((a,b) => b.id - a.id);
       }
-      if (normalized.includes('where b.`id` = ?') || normalized.includes('where id = ?')) {
-        const found = results.find(b => b.id === Number(params[0]) || b._id === String(params[0]));
+      if (normalized.includes('where b.`id` = ?') || normalized.includes('where id = ?') || normalized.includes('`id` = ?')) {
+        const target = String(params[0]);
+        const found = results.find(b => 
+          String(b.id) === target || 
+          String(b._id) === target || 
+          (b.mongoId && String(b.mongoId) === target)
+        );
         return found ? [found] : [];
       }
       return results.sort((a,b) => b.id - a.id);
@@ -511,7 +635,7 @@ export function handleMemoryQuery(sql, params = []) {
     // 6. Reviews
     if (normalized.includes('reviews')) {
       let results = memoryDb.reviews.map(r => {
-        const cust = memoryDb.users.find(u => u.id === r.customer_id || u._id === String(r.customer_id)) || {};
+        const cust = memoryDb.users.find(u => u.id === r.customer_id || u._id === String(r.customer_id) || (u.mongoId && String(u.mongoId) === String(r.customer_id))) || {};
         return {
           ...r,
           customer_name: cust.name,
@@ -520,19 +644,29 @@ export function handleMemoryQuery(sql, params = []) {
         };
       });
 
-      if (normalized.includes('where `provider_id` = ?') || normalized.includes('where r.provider_id = ?')) {
-        return results.filter(r => r.provider_id === Number(params[0]) || r.provider_id === String(params[0])).sort((a,b) => b.id - a.id);
+      if (normalized.includes('provider_id = ?') || normalized.includes('`provider_id` = ?')) {
+        const target = String(params[0]);
+        const resolvedPId = resolveProviderId(target);
+        return results.filter(r => 
+          String(r.provider_id) === String(resolvedPId) || 
+          String(r.provider_id) === target
+        ).sort((a,b) => b.id - a.id);
       }
       return results.sort((a,b) => b.id - a.id);
     }
 
     // 7. Favorites
     if (normalized.includes('favorites')) {
-      if (normalized.includes('where `customer_id` = ?') || normalized.includes('where f.customer_id = ?')) {
-        const favs = memoryDb.favorites.filter(f => f.customer_id === Number(params[0]) || f.customer_id === String(params[0]));
+      if (normalized.includes('customer_id = ?') || normalized.includes('`customer_id` = ?')) {
+        const target = String(params[0]);
+        const resolvedUId = resolveUserId(target);
+        const favs = memoryDb.favorites.filter(f => 
+          String(f.customer_id) === String(resolvedUId) || 
+          String(f.customer_id) === target
+        );
         return favs.map(f => {
-          const prov = memoryDb.service_providers.find(p => p.id === f.provider_id || p._id === String(f.provider_id));
-          const user = prov ? memoryDb.users.find(u => u.id === prov.user_id || u._id === String(prov.user_id)) : {};
+          const prov = memoryDb.service_providers.find(p => p.id === f.provider_id || p._id === String(f.provider_id) || (p.mongoId && String(p.mongoId) === String(f.provider_id)));
+          const user = prov ? memoryDb.users.find(u => u.id === prov.user_id || u._id === String(prov.user_id) || (u.mongoId && String(u.mongoId) === String(prov.user_id))) : {};
           const cat = prov ? memoryDb.categories.find(c => c.id === prov.category_id || c._id === String(prov.category_id)) : {};
           return {
             ...f,
@@ -554,11 +688,15 @@ export function handleMemoryQuery(sql, params = []) {
     // 8. Messages
     if (normalized.includes('messages')) {
       if (params.length >= 2) {
-        const u1 = Number(params[0]) || params[0];
-        const u2 = Number(params[1]) || params[1];
+        const u1 = resolveUserId(params[0]);
+        const u2 = resolveUserId(params[1]);
+        const r1 = String(params[0]);
+        const r2 = String(params[1]);
         return memoryDb.messages.filter(m => 
           (m.sender_id == u1 && m.receiver_id == u2) ||
-          (m.sender_id == u2 && m.receiver_id == u1)
+          (m.sender_id == u2 && m.receiver_id == u1) ||
+          (String(m.sender_id) === r1 && String(m.receiver_id) === r2) ||
+          (String(m.sender_id) === r2 && String(m.receiver_id) === r1)
         ).sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
       }
       return [...memoryDb.messages];
@@ -566,8 +704,13 @@ export function handleMemoryQuery(sql, params = []) {
 
     // 9. Notifications
     if (normalized.includes('notifications')) {
-      if (normalized.includes('where `user_id` = ?')) {
-        return memoryDb.notifications.filter(n => n.user_id === Number(params[0]) || n.user_id === String(params[0])).sort((a,b) => b.id - a.id);
+      if (normalized.includes('user_id = ?') || normalized.includes('`user_id` = ?')) {
+        const target = String(params[0]);
+        const resolvedUId = resolveUserId(target);
+        return memoryDb.notifications.filter(n => 
+          String(n.user_id) === String(resolvedUId) || 
+          String(n.user_id) === target
+        ).sort((a,b) => b.id - a.id);
       }
       return [...memoryDb.notifications];
     }
@@ -875,7 +1018,18 @@ export function handleMemoryQuery(sql, params = []) {
 
     if (normalized.includes('service_providers')) {
       if (normalized.includes('is_available = ?') || normalized.includes('`is_available` = ?')) {
-        const prov = memoryDb.service_providers.find(p => p.id == params[1] || p._id == params[1] || p.user_id == params[1]);
+        const target = String(params[1]);
+        const resolvedUId = resolveUserId(target);
+        const resolvedPId = resolveProviderId(target);
+        const prov = memoryDb.service_providers.find(p => 
+          String(p.id) === target || 
+          String(p.id) === String(resolvedPId) || 
+          String(p._id) === target || 
+          String(p.user_id) === target || 
+          String(p.user_id) === String(resolvedUId) || 
+          (p.mongoId && String(p.mongoId) === target) ||
+          (p.userId && String(p.userId) === target)
+        );
         if (prov) {
           prov.is_available = params[0] ? 1 : 0;
           if (mongoose.connection.readyState === 1 && prov.mongoId) {
@@ -903,7 +1057,8 @@ export function handleMemoryQuery(sql, params = []) {
 
     if (normalized.includes('users')) {
       const id = params[params.length - 1];
-      const u = memoryDb.users.find(user => user.id == id || user._id == id);
+      const target = String(id);
+      const u = memoryDb.users.find(user => String(user.id) === target || String(user._id) === target || (user.mongoId && String(user.mongoId) === target));
       if (u) {
         if (params.length >= 4) {
           u.name = params[0] || u.name;
@@ -932,14 +1087,19 @@ export function handleMemoryQuery(sql, params = []) {
   // DELETE queries
   if (normalized.startsWith('delete from')) {
     if (normalized.includes('favorites')) {
-      const cId = params[0];
-      const pId = params[1];
-      const idx = memoryDb.favorites.findIndex(f => f.customer_id == cId && f.provider_id == pId);
+      const cTarget = String(params[0]);
+      const pTarget = String(params[1]);
+      const resolvedC = resolveUserId(cTarget);
+      const resolvedP = resolveProviderId(pTarget);
+      const idx = memoryDb.favorites.findIndex(f => 
+        (String(f.customer_id) === cTarget || String(f.customer_id) === String(resolvedC)) && 
+        (String(f.provider_id) === pTarget || String(f.provider_id) === String(resolvedP))
+      );
       if (idx !== -1) {
         memoryDb.favorites.splice(idx, 1);
         if (mongoose.connection.readyState === 1) {
-          const cust = memoryDb.users.find(u => u.id == cId);
-          const prov = memoryDb.service_providers.find(p => p.id == pId);
+          const cust = memoryDb.users.find(u => String(u.id) === String(resolvedC) || (u.mongoId && String(u.mongoId) === cTarget));
+          const prov = memoryDb.service_providers.find(p => String(p.id) === String(resolvedP) || (p.mongoId && String(p.mongoId) === pTarget));
           if (cust?.mongoId && prov?.mongoId) {
             Favorite.deleteOne({ customerId: cust.mongoId, providerId: prov.mongoId }).catch(() => {});
           }

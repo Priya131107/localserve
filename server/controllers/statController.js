@@ -18,7 +18,7 @@ export async function getProviderStats(req, res, next) {
     }
 
     const provider = providers[0];
-    const bookings = await query('SELECT * FROM `bookings` WHERE b.`provider_id` = ?', [provider.id]);
+    const bookings = await query('SELECT * FROM `bookings` WHERE `provider_id` = ?', [provider.id]);
     const reviews = await query('SELECT * FROM `reviews` WHERE `provider_id` = ?', [provider.id]);
 
     const totalBookings = bookings.length;
@@ -65,8 +65,8 @@ export async function getCustomerStats(req, res, next) {
   try {
     const userId = req.user.id;
 
-    const bookings = await query('SELECT * FROM `bookings` WHERE b.`customer_id` = ?', [userId]);
-    const favorites = await query('SELECT * FROM `favorites` WHERE f.`customer_id` = ?', [userId]);
+    const bookings = await query('SELECT * FROM `bookings` WHERE `customer_id` = ?', [userId]);
+    const favorites = await query('SELECT * FROM `favorites` WHERE `customer_id` = ?', [userId]);
 
     const totalBookings = bookings.length;
     const activeBookings = bookings.filter(b => b.status === 'pending' || b.status === 'accepted').length;

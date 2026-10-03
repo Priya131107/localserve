@@ -334,7 +334,7 @@ npm run dev
   - `NODE_ENV`: `production`
   - `MONGO_URI`: `mongodb+srv://ps1204628_db_user:fd5eAczCDkVX3DPs@cluster0.6ybwipi.mongodb.net/?appName=Cluster0`
   - `JWT_SECRET`: `<Your JWT secret>`
-  - `CLIENT_URL`: `https://local-service-finder-weld.vercel.app/`
+  - `CLIENT_URL`: `https://localserve-alpha.vercel.app/`
 
 ### 2. Frontend Deployment (Vercel)
 - **Root Directory**: `client`
